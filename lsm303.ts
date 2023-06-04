@@ -264,7 +264,7 @@ namespace zumo {
             case ZumoIMUType.LSM6DS33_LIS3MDL:
                 // assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
                 readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_XL, a);
-                msga ="a1";
+                msga ="a1 {LSM6DS33_ADDR} {LSM6DS33_REG_OUTX_L_XL}";
                 return;
         }
     }
