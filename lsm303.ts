@@ -92,23 +92,23 @@ namespace zumo {
     let m: number[] = [0, 0, 0];
 
 
-    function init(): boolean {
+    function init(): number {
         if (testReg(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_CTRL_REG1_A) != TEST_REG_ERROR) {
             // The DLHC doesn't have a documented WHO_AM_I register, so we test for it
             // by looking for a response at the DLHC accelerometer address. (The DLHC
             // magnetometer address is the same as that of the LIS3MDL.)
             type = ZumoIMUType.LSM303DLHC;
-            return true;
+            return 1;
         } else if (testReg(LSM303D_ADDR, LSM303D_REG_WHO_AM_I) == LSM303D_WHO_ID &&
             testReg(L3GD20H_ADDR, L3GD20H_REG_WHO_AM_I) == L3GD20H_WHO_ID) {
             type = ZumoIMUType.LSM303D_L3GD20H;
-            return true;
+            return 2;
         } else if (testReg(LSM6DS33_ADDR, LSM6DS33_REG_WHO_AM_I) == LSM6DS33_WHO_ID &&
             testReg(LIS3MDL_ADDR, LIS3MDL_REG_WHO_AM_I) == LIS3MDL_WHO_ID) {
             type = ZumoIMUType.LSM6DS33_LIS3MDL;
-            return true;
+            return 3;
         } else {
-            return false;
+            return 4;
         }
     }
 
@@ -376,16 +376,16 @@ namespace zumo {
     //% blockId=enableIMU
     //% block="enable IMU "
     //% subcategory=IMU
-    export function enableIMU(): boolean {
-        return init();
-        
-        while (!init()) {
+    export function enableIMU(): number {
+        let ret = 0;
+        while (ret==0) {
+            ret = init();
             control.waitMicros(400);
         }
-
+        return ret;
         enableDefault();
         configureForCompassHeading();
-        return false;
+
     }
 
     //% blockId=readIMUx
