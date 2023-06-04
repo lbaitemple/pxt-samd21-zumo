@@ -7,12 +7,9 @@
     },
     "files": [
         "README.md",
-        "main.blocks",
-        "main.ts"
+        "oled.ts"
     ],
-    "testFiles": [
-        "test.ts"
-    ],
+    "testFiles": [],
     "public": true,
     "targetVersions": {
         "target": "0.15.66",
@@ -21,5 +18,5 @@
     "supportedTargets": [
         "maker"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
