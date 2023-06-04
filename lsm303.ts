@@ -15,25 +15,25 @@ enum ZumoIMUDirection {
 namespace zumo {
 
 
-/*! \anchor device_addresses
- *
- * \name Device Addresses
- * @{
- */
+    /*! \anchor device_addresses
+     *
+     * \name Device Addresses
+     * @{
+     */
     const LSM303DLHC_ACC_ADDR = 0x19 // 0b0011001
     const LSM303DLHC_MAG_ADDR = 0x1E // 0b0011110
-    const LSM303D_ADDR        = 0x1D // 0b0011101
-    const L3GD20H_ADDR        = 0x6B // 0b1101011
-    const LSM6DS33_ADDR       = 0x6B  // 0b1101011
-    const LIS3MDL_ADDR        = 0x1E  // 0b0011110
-/*! @} */
+    const LSM303D_ADDR = 0x1D // 0b0011101
+    const L3GD20H_ADDR = 0x6B // 0b1101011
+    const LSM6DS33_ADDR = 0x6B  // 0b1101011
+    const LIS3MDL_ADDR = 0x1E  // 0b0011110
+    /*! @} */
 
-/*! \anchor register_addresses
- *
- * \name Register Addresses
- * @{
- */
-    const LSM303D_WHO_ID =  0x49
+    /*! \anchor register_addresses
+     *
+     * \name Register Addresses
+     * @{
+     */
+    const LSM303D_WHO_ID = 0x49
     const L3GD20H_WHO_ID = 0xD7
     const LSM6DS33_WHO_ID = 0x69
     const LIS3MDL_WHO_ID = 0x3D
@@ -86,12 +86,12 @@ namespace zumo {
 
     let _i2c: I2C;
     let lastError = 0;
-    let type =0;
+    let type = 0;
     let a: number[] = [0, 0, 0];
     let g: number[] = [0, 0, 0];
     let m: number[] = [0, 0, 0];
 
-    
+
     function init(): boolean {
         if (testReg(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_CTRL_REG1_A) != TEST_REG_ERROR) {
             // The DLHC doesn't have a documented WHO_AM_I register, so we test for it
@@ -194,8 +194,7 @@ namespace zumo {
         }
     }
 
-    function testReg(addr: number, reg: number): number     
-    {    
+    function testReg(addr: number, reg: number): number {
         let result = TEST_REG_ERROR;
         let buffer = pins.createBuffer(1);
         buffer.setNumber(NumberFormat.UInt8BE, 0, reg);
@@ -217,7 +216,7 @@ namespace zumo {
         buffer[0] = reg;
         buffer[1] = value;
 
-        lastError =  pins.i2cWriteBuffer(addr, buffer);
+        lastError = pins.i2cWriteBuffer(addr, buffer);
     }
 
     function readReg(addr: number, reg: number): number {
@@ -226,7 +225,7 @@ namespace zumo {
         let buffer = pins.createBuffer(1);
         buffer[0] = reg;
 
-        lastError =  pins.i2cWriteBuffer(addr, buffer);
+        lastError = pins.i2cWriteBuffer(addr, buffer);
 
         let data = pins.i2cReadBuffer(addr, 1);
         if (data.length != 1) {
@@ -266,7 +265,7 @@ namespace zumo {
     }
 
 
-    function readAxes16Bit(addr: number, firstReg: number, v: number []): void {
+    function readAxes16Bit(addr: number, firstReg: number, v: number[]): void {
         let xl: number, xh: number, yl: number, yh: number, zl: number, zh: number;
 
         pins.i2cWriteNumber(addr, firstReg, NumberFormat.UInt8BE);
@@ -313,7 +312,7 @@ namespace zumo {
         if (lastError) { return; }
         readMag();
     }
-    
+
     function readMag(): void {
         if (type == ZumoIMUType.LSM303DLHC) {
             // Magnetometer automatically increments register address
@@ -378,10 +377,10 @@ namespace zumo {
     //% block="enable IMU "
     //% subcategory=IMU
     export function enableIMU(): number {
-        while (!init()){
+        while (!init()) {
             control.waitMicros(400);
         }
-        
+
         enableDefault();
         configureForCompassHeading();
         return 1;
