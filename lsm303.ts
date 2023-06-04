@@ -276,17 +276,19 @@ namespace zumo {
         pins.i2cWriteNumber(addr, firstReg, NumberFormat.UInt8BE);
         let lastError = pins.i2cReadNumber(addr, NumberFormat.UInt8BE);
         if (lastError) {
+            msga ="last error";
             return;
         }
 
         let byteCount = pins.i2cReadBuffer(addr, 6).length;
         if (byteCount !== 6) {
+            msga="count error";
             lastError = 50;
             return;
         }
-        if (addr == LSM6DS33_ADDR){
-            msga = `a1 ${lastError} ${byteCount}`;
-        }
+        //if (addr == LSM6DS33_ADDR){
+        //msga = `a1 ${lastError} ${byteCount}`;
+        //}
         xl = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
         xh = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
         yl = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
