@@ -309,7 +309,7 @@ namespace zumo {
     //% blockId=pullread
     //% block="pull read"
     //% subcategory=IMU
-    function read(): void {
+    export function read(): void {
         while (!accDataReady()){
             control.waitMicros(40);
         }
