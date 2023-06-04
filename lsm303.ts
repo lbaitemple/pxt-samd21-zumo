@@ -378,7 +378,7 @@ namespace zumo {
     //% blockId=enableIMU
     //% block="enable IMU "
     //% subcategory=IMU
-    export function enableIMU(): String {
+    export function enableIMU(): string {
         let ret = 0, ret1= 0, ret2=0;
         
         while (ret==0) {
