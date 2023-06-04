@@ -83,9 +83,19 @@ namespace zumo {
     const LIS3MDL_REG_OUT_X_L = 0x28
 
     const TEST_REG_ERROR = -1
+    const MAXREAD=32767
+    const MINREAD = -32767
+
+    // Conversion constants
+    const _LSM303ACCEL_MG_LSB = 16704.0
+    const _GRAVITY_STANDARD = 9.80665      // Earth's gravity in m/s^2
+    const _GAUSS_TO_MICROTESLA = 100.0        // Gauss to micro - Tesla multiplier
+
 
     let _i2c: I2C;
     let lastError = 0;
+    let minread = MINREAD;
+    let maxread = MAXREAD;
     let type = 0;
     let a: number[] = [0, 0, 0];
     let g: number[] = [0, 0, 0];
@@ -249,6 +259,7 @@ namespace zumo {
     }
 
     function readAcc(): void {
+        let aa = [0,0, 0];
 
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
@@ -263,8 +274,10 @@ namespace zumo {
 
             case ZumoIMUType.LSM6DS33_LIS3MDL:
                 // assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
-                readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_XL, a);
-
+                readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_XL, aa);
+                a[0] = aa[0] / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
+                a[1] = aa[1] / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
+                a[2] = aa[2] / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
                 return;
         }
     }
