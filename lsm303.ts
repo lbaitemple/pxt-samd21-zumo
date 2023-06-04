@@ -292,7 +292,8 @@ namespace zumo {
         v[1] = (yh << 8) | yl;
         v[2] = (zh << 8) | zl;
     }
-    
+
+
     function readGyro(): void {
         if (type == ZumoIMUType.LSM303D_L3GD20H) {
             // Set MSB of register address for auto-increment
