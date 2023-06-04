@@ -380,7 +380,7 @@ namespace zumo {
     //% subcategory=IMU
     export function enableIMU(): String {
         let ret = 0, ret1= 0, ret2=0;
-        let restr ='';
+        
         while (ret==0) {
             ret = init();
             control.waitMicros(400);
@@ -388,7 +388,7 @@ namespace zumo {
 
         ret1=enableDefault();
         ret2=configureForCompassHeading();
-        restr = ret+ " " + ret1 + " " + ret2;
+        let restr =`init ${ret}, enable ${ret1} config ${ret2}`;
         return restr;
     }
 
