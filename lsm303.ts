@@ -90,6 +90,7 @@ namespace zumo {
     let a: number[] = [0, 0, 0];
     let g: number[] = [0, 0, 0];
     let m: number[] = [0, 0, 0];
+    let msg='';
 
 
     function init(): number {
@@ -359,7 +360,10 @@ namespace zumo {
         }
     }
 
-    function gyroDataReady(): boolean {
+    //% blockId=readIMUgyro
+    //% block="gyroDataReady"
+    //% subcategory=IMU
+    export    function gyroDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303D_L3GD20H:
                 return (readReg(L3GD20H_ADDR, L3GD20H_REG_STATUS) & 0x08) !== 0;
@@ -370,13 +374,26 @@ namespace zumo {
         }
     }
 
-    function magDataReady(): boolean {
+    //% blockId=getMsg
+    //% block="get msg from acc"
+    //% subcategory=IMU
+    export function getMsg(): string{
+        return msg;
+    }
+
+    //% blockId=readIMUmag
+    //% block="magDataReady"
+    //% subcategory=IMU
+    export    function magDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
+                msg =`this is one`;
                 return (readReg(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_SR_REG_M) & 0x01) !== 0;
             case ZumoIMUType.LSM303D_L3GD20H:
+                msg = `this is two`;
                 return (readReg(LSM303D_ADDR, LSM303D_REG_STATUS_M) & 0x08) !== 0;
             case ZumoIMUType.LSM6DS33_LIS3MDL:
+                msg = `this is three`;
                 return (readReg(LIS3MDL_ADDR, LIS3MDL_REG_STATUS_REG) & 0x08) !== 0;
             default:
                 return false;
