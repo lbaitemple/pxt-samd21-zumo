@@ -270,40 +270,29 @@ namespace zumo {
     }
 
 
+
     function readAxes16Bit(addr: number, firstReg: number, v: number[]): void {
-        let xl: number, xh: number, yl: number, yh: number, zl: number, zh: number;
+        let buffer = pins.createBuffer(6);
 
-        pins.i2cWriteNumber(addr, firstReg, NumberFormat.UInt8BE);
-        let lastError = pins.i2cReadNumber(addr, NumberFormat.UInt8BE);
-        if (lastError) {
-            msga ="last error";
-            return;
-        }
+        // Write the first register address
+        pins.i2cWriteNumber(addr, firstReg, NumberFormat.UInt8BE, false);
 
-        let byteCount = pins.i2cReadBuffer(addr, 6).length;
-        if (byteCount !== 6) {
-            msga="count error";
-            lastError = 50;
-            return;
-        }
-        //if (addr == LSM6DS33_ADDR){
-        //msga = `a1 ${lastError} ${byteCount}`;
-        //}
-        xl = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
-        xh = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
-        yl = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
-        yh = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
-        zl = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
-        zh = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
+        // Read 6 bytes of data
+        buffer = pins.i2cReadBuffer(addr, 6);
 
-        // combine high and low bytes
+        let xl = buffer[0];
+        let xh = buffer[1];
+        let yl = buffer[2];
+        let yh = buffer[3];
+        let zl = buffer[4];
+        let zh = buffer[5];
+
+        // Combine high and low bytes
         v[0] = (xh << 8) | xl;
         v[1] = (yh << 8) | yl;
         v[2] = (zh << 8) | zl;
-        v[2] = 45;
     }
-
-
+    
     function readGyro(): void {
         if (type == ZumoIMUType.LSM303D_L3GD20H) {
             // Set MSB of register address for auto-increment
