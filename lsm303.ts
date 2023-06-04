@@ -376,14 +376,16 @@ namespace zumo {
     //% blockId=enableIMU
     //% block="enable IMU "
     //% subcategory=IMU
-    export function enableIMU(): number {
+    export function enableIMU(): boolean {
+        return init();
+        
         while (!init()) {
             control.waitMicros(400);
         }
 
         enableDefault();
         configureForCompassHeading();
-        return 1;
+        return false;
     }
 
     //% blockId=readIMUx
