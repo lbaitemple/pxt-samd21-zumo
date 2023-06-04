@@ -306,8 +306,8 @@ namespace zumo {
             readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_G, g);
         }
     }
-    //% blockId=read
-    //% block="read"
+    //% blockId=pullread
+    //% block="pull read"
     //% subcategory=IMU
     function read(): void {
         while (!accDataReady()){
