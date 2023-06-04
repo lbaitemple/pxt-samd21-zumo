@@ -90,7 +90,7 @@ namespace zumo {
     let a: number[] = [0, 0, 0];
     let g: number[] = [0, 0, 0];
     let m: number[] = [0, 0, 0];
-    let msg='';
+    let msga='', msgg ='', msgm='';
 
 
     function init(): number {
@@ -350,10 +350,13 @@ namespace zumo {
     export function accDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
+                msga = `1`;
                 return (readReg(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_STATUS_REG_A) & 0x08) !== 0;
             case ZumoIMUType.LSM303D_L3GD20H:
+                msga = `2`;
                 return (readReg(LSM303D_ADDR, LSM303D_REG_STATUS_A) & 0x08) !== 0;
             case ZumoIMUType.LSM6DS33_LIS3MDL:
+                msga = `3`;
                 return (readReg(LSM6DS33_ADDR, LSM6DS33_REG_STATUS_REG) & 0x01) !== 0;
             default:
                 return false;
@@ -366,8 +369,10 @@ namespace zumo {
     export    function gyroDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303D_L3GD20H:
+                msgg = `1`;
                 return (readReg(L3GD20H_ADDR, L3GD20H_REG_STATUS) & 0x08) !== 0;
             case ZumoIMUType.LSM6DS33_LIS3MDL:
+                msgm = `2`;
                 return (readReg(LSM6DS33_ADDR, LSM6DS33_REG_STATUS_REG) & 0x02) !== 0;
             default:
                 return false;
@@ -378,6 +383,7 @@ namespace zumo {
     //% block="get msg from acc"
     //% subcategory=IMU
     export function getMsg(): string{
+        let msg = msga+ ":" + msgg + ":" + msgm;
         return msg;
     }
 
@@ -387,13 +393,13 @@ namespace zumo {
     export    function magDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
-                msg =`this is one`;
+                msgm =`this is one`;
                 return (readReg(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_SR_REG_M) & 0x01) !== 0;
             case ZumoIMUType.LSM303D_L3GD20H:
-                msg = `this is two`;
+                msgm = `this is two`;
                 return (readReg(LSM303D_ADDR, LSM303D_REG_STATUS_M) & 0x08) !== 0;
             case ZumoIMUType.LSM6DS33_LIS3MDL:
-                msg = `this is three`;
+                msgm = `this is three`;
                 return (readReg(LIS3MDL_ADDR, LIS3MDL_REG_STATUS_REG) & 0x08) !== 0;
             default:
                 return false;
