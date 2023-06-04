@@ -26,9 +26,9 @@ declare interface Math {
 
 const enum ZumoLED {
     //% block="ON"
-    ON=1,
+    ON = 1,
     //% block="OFF"
-    OFF=0,
+    OFF = 0,
 }
 
 const enum ZumoNotes {
@@ -97,7 +97,7 @@ namespace zumo {
         if (motor === ZumoMotor.left || motor === ZumoMotor.All) {
             const isClockwise = speed * motorRotations[ZumoMotor.left] > 0;
             pins.D7.digitalWrite(isClockwise ? true : false);
-         //   pins.D8.digitalWrite(isClockwise ? true : false);
+            //   pins.D8.digitalWrite(isClockwise ? true : false);
 
             if (speed === 100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
@@ -110,7 +110,7 @@ namespace zumo {
         }
         if (motor === ZumoMotor.right || motor === ZumoMotor.All) {
             const isClockwise = speed * motorRotations[ZumoMotor.right] > 0;
-    //        pins.D7.digitalWrite(isClockwise ? true : false);
+            //        pins.D7.digitalWrite(isClockwise ? true : false);
             pins.D8.digitalWrite(isClockwise ? true : false);
             if (speed === 100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
@@ -178,14 +178,13 @@ namespace zumo {
     //% subcategory=LED
     export function setZumoLED(
         state: ZumoLED
-    ) 
-    {
-       pins.D13.digitalWrite(state ? true : false);
+    ) {
+        pins.D13.digitalWrite(state ? true : false);
     }
     //% blockId="zumo_button" block="get button %ZumoPushButtonState"
     //% weight=90
     //% subcategory=Button
-    export function getZumoButtonState() : boolean {
+    export function getZumoButtonState(): boolean {
         return input.buttonD12.isPressed();
     }
 
@@ -202,7 +201,7 @@ namespace zumo {
 
         let list: Array<number> = [0, 0, 0, 0, 0];
         for (let i = 0; i < 5; i++) {
-            
+
             pulsePin.setPull(PinPullMode.PullNone);
             pulsePin.digitalWrite(false);
             control.waitMicros(2);

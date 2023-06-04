@@ -7,7 +7,9 @@
     },
     "files": [
         "README.md",
-        "oled.ts"
+        "oled.ts",
+        "zumo.ts",
+        "ns.ts"
     ],
     "testFiles": [],
     "public": true,
