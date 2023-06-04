@@ -19,7 +19,7 @@ class I2C {
     }
 
     readAcc(): number[] {
-        const d: number[] = this.readAccReg(0x28, 6);
+        const d: number[] = this.readAccReg(0x29, 6);
         // Reconstruct 16-bit data
         const a: number[] = [
             d[0] | (d[1] << 8),
