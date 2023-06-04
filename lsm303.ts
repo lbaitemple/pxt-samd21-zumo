@@ -20,12 +20,12 @@ namespace zumo {
      * \name Device Addresses
      * @{
      */
-    const LSM303DLHC_ACC_ADDR = 0x19 // 0b0011001
-    const LSM303DLHC_MAG_ADDR = 0x1E // 0b0011110
-    const LSM303D_ADDR = 0x1D // 0b0011101
-    const L3GD20H_ADDR = 0x6B // 0b1101011
-    const LSM6DS33_ADDR = 0x6B  // 0b1101011
-    const LIS3MDL_ADDR = 0x1E  // 0b0011110
+    const LSM303DLHC_ACC_ADDR =  0b0011001
+    const LSM303DLHC_MAG_ADDR =  0b0011110
+    const LSM303D_ADDR =  0b0011101
+    const L3GD20H_ADDR =  0b1101011
+    const LSM6DS33_ADDR = 0b1101011
+    const LIS3MDL_ADDR =  0b0011110
     /*! @} */
 
     /*! \anchor register_addresses
@@ -264,7 +264,7 @@ namespace zumo {
             case ZumoIMUType.LSM6DS33_LIS3MDL:
                 // assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
                 readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_XL, a);
-                msga =`a1 ${LSM6DS33_ADDR} ${LSM6DS33_REG_OUTX_L_XL}`;
+
                 return;
         }
     }
@@ -284,7 +284,9 @@ namespace zumo {
             lastError = 50;
             return;
         }
-
+        if (addr == LSM6DS33_ADDR){
+            msga = `a1 ${lastError} ${byteCount}`;
+        }
         xl = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
         xh = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
         yl = pins.i2cReadNumber(addr, NumberFormat.UInt8LE);
