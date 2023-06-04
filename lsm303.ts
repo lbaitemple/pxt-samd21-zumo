@@ -249,6 +249,7 @@ namespace zumo {
     }
 
     function readAcc(): void {
+
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
                 // set MSB of register address for auto-increment
@@ -263,6 +264,7 @@ namespace zumo {
             case ZumoIMUType.LSM6DS33_LIS3MDL:
                 // assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
                 readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_XL, a);
+                msga ="a1";
                 return;
         }
     }
@@ -305,6 +307,7 @@ namespace zumo {
         } else if (type == ZumoIMUType.LSM6DS33_LIS3MDL) {
             // Assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
             readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_G, g);
+            msgg = "g2";
         }
     }
     //% blockId=pullread
@@ -341,6 +344,7 @@ namespace zumo {
         } else if (type == ZumoIMUType.LSM6DS33_LIS3MDL) {
             // Set MSB of register address for auto-increment
             readAxes16Bit(LIS3MDL_ADDR, LIS3MDL_REG_OUT_X_L | (1 << 7), m);
+            msgm = "m3";
         }
     }
 
@@ -350,13 +354,10 @@ namespace zumo {
     export function accDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
-                msga = `1`;
                 return (readReg(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_STATUS_REG_A) & 0x08) !== 0;
             case ZumoIMUType.LSM303D_L3GD20H:
-                msga = `2`;
                 return (readReg(LSM303D_ADDR, LSM303D_REG_STATUS_A) & 0x08) !== 0;
             case ZumoIMUType.LSM6DS33_LIS3MDL:
-                msga = `3`;
                 return (readReg(LSM6DS33_ADDR, LSM6DS33_REG_STATUS_REG) & 0x01) !== 0;
             default:
                 return false;
@@ -369,10 +370,8 @@ namespace zumo {
     export    function gyroDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303D_L3GD20H:
-                msgg = `1`;
                 return (readReg(L3GD20H_ADDR, L3GD20H_REG_STATUS) & 0x08) !== 0;
             case ZumoIMUType.LSM6DS33_LIS3MDL:
-                msgg = `2`;
                 return (readReg(LSM6DS33_ADDR, LSM6DS33_REG_STATUS_REG) & 0x02) !== 0;
             default:
                 return false;
@@ -393,13 +392,10 @@ namespace zumo {
     export    function magDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
-                msgm =`this is one`;
                 return (readReg(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_SR_REG_M) & 0x01) !== 0;
             case ZumoIMUType.LSM303D_L3GD20H:
-                msgm = `this is two`;
                 return (readReg(LSM303D_ADDR, LSM303D_REG_STATUS_M) & 0x08) !== 0;
             case ZumoIMUType.LSM6DS33_LIS3MDL:
-                msgm = `this is three`;
                 return (readReg(LIS3MDL_ADDR, LIS3MDL_REG_STATUS_REG) & 0x08) !== 0;
             default:
                 return false;
