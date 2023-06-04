@@ -372,7 +372,7 @@ namespace zumo {
                 msgg = `1`;
                 return (readReg(L3GD20H_ADDR, L3GD20H_REG_STATUS) & 0x08) !== 0;
             case ZumoIMUType.LSM6DS33_LIS3MDL:
-                msgm = `2`;
+                msgg = `2`;
                 return (readReg(LSM6DS33_ADDR, LSM6DS33_REG_STATUS_REG) & 0x02) !== 0;
             default:
                 return false;
