@@ -112,86 +112,88 @@ namespace zumo {
         }
     }
 
-    function enableDefault(): void {
+    function enableDefault(): number {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
                 // Accelerometer
                 writeReg(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_CTRL_REG1_A, 0x47);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_CTRL_REG4_A, 0x08);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
 
                 // Magnetometer
                 writeReg(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_CRA_REG_M, 0x0C);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_CRB_REG_M, 0x80);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_MR_REG_M, 0x00);
-                return;
+                return 2;
 
             case ZumoIMUType.LSM303D_L3GD20H:
                 // Accelerometer
                 writeReg(LSM303D_ADDR, LSM303D_REG_CTRL1, 0x57);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LSM303D_ADDR, LSM303D_REG_CTRL2, 0x00);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
 
                 // Magnetometer
                 writeReg(LSM303D_ADDR, LSM303D_REG_CTRL5, 0x64);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LSM303D_ADDR, LSM303D_REG_CTRL6, 0x20);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LSM303D_ADDR, LSM303D_REG_CTRL7, 0x00);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
 
                 // Gyro
                 writeReg(L3GD20H_ADDR, L3GD20H_REG_CTRL1, 0x7F);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(L3GD20H_ADDR, L3GD20H_REG_CTRL4, 0x00);
-                return;
+                return 3;
 
             case ZumoIMUType.LSM6DS33_LIS3MDL:
                 // Accelerometer
                 writeReg(LSM6DS33_ADDR, LSM6DS33_REG_CTRL1_XL, 0x30);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
 
                 // Gyro
                 writeReg(LSM6DS33_ADDR, LSM6DS33_REG_CTRL2_G, 0x50);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
 
                 // Accelerometer + Gyro
                 writeReg(LSM6DS33_ADDR, LSM6DS33_REG_CTRL3_C, 0x04);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
 
                 // Magnetometer
                 writeReg(LIS3MDL_ADDR, LIS3MDL_REG_CTRL_REG1, 0x70);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LIS3MDL_ADDR, LIS3MDL_REG_CTRL_REG2, 0x00);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LIS3MDL_ADDR, LIS3MDL_REG_CTRL_REG3, 0x00);
-                if (lastError) { return; }
+                if (lastError) { return -1; }
                 writeReg(LIS3MDL_ADDR, LIS3MDL_REG_CTRL_REG4, 0x0C);
-                return;
+                return 4;
         }
+        return 0;
     }
 
-    function configureForCompassHeading(): void {
+    function configureForCompassHeading(): number {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
                 // Magnetometer
                 writeReg(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_CRA_REG_M, 0x18);
-                return;
+                return 1;
 
             case ZumoIMUType.LSM303D_L3GD20H:
                 // Magnetometer
                 writeReg(LSM303D_ADDR, LSM303D_REG_CTRL5, 0x70);
-                return;
+                return 2;
 
             case ZumoIMUType.LSM6DS33_LIS3MDL:
                 // Magnetometer
                 writeReg(LIS3MDL_ADDR, LIS3MDL_REG_CTRL_REG1, 0x7C);
-                return;
+                return 3;
         }
+        return 0;
     }
 
     function testReg(addr: number, reg: number): number {
@@ -376,16 +378,18 @@ namespace zumo {
     //% blockId=enableIMU
     //% block="enable IMU "
     //% subcategory=IMU
-    export function enableIMU(): number {
-        let ret = 0;
+    export function enableIMU(): String {
+        let ret = 0, ret1= 0, ret2=0;
+        let restr ='';
         while (ret==0) {
             ret = init();
             control.waitMicros(400);
         }
-        return ret;
-        enableDefault();
-        configureForCompassHeading();
 
+        ret1=enableDefault();
+        ret2=configureForCompassHeading();
+        restr = ret+ " " + ret1 + " " + ret2;
+        return restr;
     }
 
     //% blockId=readIMUx
