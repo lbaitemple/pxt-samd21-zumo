@@ -1,12 +1,24 @@
 class I2C {
+
     writeTo(address: number, data: number[]): void {
-        // Write implementation here
+        const buffer = pins.createBuffer(data.length + 1);
+        buffer[0] = address;
+        for (let i = 0; i < data.length; i++) {
+            buffer[i + 1] = data[i];
+        }
+        pins.i2cWriteBuffer(address, buffer);
     }
 
     readFrom(address: number, count: number): number[] {
-        // Read implementation here
-        return [];
+        const buffer = pins.i2cReadBuffer(address, count);
+        const result: number[] = [];
+        for (let i = 0; i < buffer.length; i++) {
+            result.push(buffer[i]);
+        }
+        return result;
     }
+
+
 
     writeAccReg(reg: number, val: number): void {
         this.writeTo(0x32 >> 1, [reg, val]);
