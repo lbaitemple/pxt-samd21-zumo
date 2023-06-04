@@ -232,7 +232,7 @@ namespace zumo {
         lastError = pins.i2cWriteBuffer(addr, buffer);
     }
 
-    function readReg(addr: number, reg: number): number {
+/*    function readReg(addr: number, reg: number): number {
         let value = 0;
 
         let buffer = pins.createBuffer(1);
@@ -249,6 +249,20 @@ namespace zumo {
         value = data[0];
         return value;
     }
+    */
+    
+    function readReg(addr: number, reg: number): number {
+        let result = 0;
+
+        // Write the register address
+        pins.i2cWriteNumber(addr, reg, NumberFormat.UInt8BE, true);
+
+        // Read 1 byte of data
+        result = pins.i2cReadNumber(addr, NumberFormat.UInt8BE, false);
+
+        return result;
+    }
+
 
 
     function swapBytes(value: number): number {
@@ -315,7 +329,6 @@ namespace zumo {
         } else if (type == ZumoIMUType.LSM6DS33_LIS3MDL) {
             // Assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
             readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_G, g);
-            msgg = "g2";
         }
     }
     //% blockId=pullread
@@ -352,7 +365,6 @@ namespace zumo {
         } else if (type == ZumoIMUType.LSM6DS33_LIS3MDL) {
             // Set MSB of register address for auto-increment
             readAxes16Bit(LIS3MDL_ADDR, LIS3MDL_REG_OUT_X_L | (1 << 7), m);
-            msgm = "m3";
         }
     }
 
