@@ -10,7 +10,8 @@
         "oled.ts",
         "lsm303.ts",
         "zumo.ts",
-        "ns.ts"
+        "ns.ts",
+        "sample.ts"
     ],
     "testFiles": [],
     "public": true,
