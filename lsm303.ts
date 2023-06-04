@@ -306,12 +306,23 @@ namespace zumo {
             readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_G, g);
         }
     }
-
+    //% blockId=read
+    //% block="read"
+    //% subcategory=IMU
     function read(): void {
+        while (!accDataReady()){
+            control.waitMicros(40);
+        }
         readAcc();
         if (lastError) { return; }
+        while (!gyroDataReady()) {
+            control.waitMicros(40);
+        }
         readGyro();
         if (lastError) { return; }
+        while (!magDataReady()) {
+            control.waitMicros(40);
+        }
         readMag();
     }
 
@@ -396,63 +407,54 @@ namespace zumo {
     //% block="read readIMUAccx "
     //% subcategory=IMU
     export function readIMUAccx(): number {
-        readAcc();
         return a[ZumoIMUDirection.X];
     }
     //% blockId=readIMUy
     //% block="read readIMUAccy "
     //% subcategory=IMU
     export function readIMUAccy(): number {
-        readAcc();
         return a[ZumoIMUDirection.Y];
     }
     //% blockId=readIMUz
     //% block="read readIMUAccz "
     //% subcategory=IMU
     export function readIMUAccz(): number {
-        readAcc();
         return a[ZumoIMUDirection.Z];
     }
     //% blockId=readIMUmx
     //% block="read readIMUMagx "
     //% subcategory=IMU
     export function readIMUMagx(): number {
-        read();
         return m[ZumoIMUDirection.X];
     }
     //% blockId=readIMUmy
     //% block="read readIMUMagy "
     //% subcategory=IMU
     export function readIMUMagy(): number {
-        read();
         return m[ZumoIMUDirection.Y];
     }
     //% blockId=readIMUmz
     //% block="read readIMUMagz "
     //% subcategory=IMU
     export function readIMUMagz(): number {
-        read();
         return m[ZumoIMUDirection.Z];
     }
     //% blockId=readIMUgx
     //% block="read readIMUGyrox "
     //% subcategory=IMU
     export function readIMUGyrox(): number {
-        read();
         return g[ZumoIMUDirection.X];
     }
     //% blockId=readIMUgy
     //% block="read readIMUGyroy "
     //% subcategory=IMU
     export function readIMUGyroy(): number {
-        read();
         return g[ZumoIMUDirection.Y];
     }
     //% blockId=readIMUgz
     //% block="read readIMUGyroz "
     //% subcategory=IMU
     export function readIMUGyroz(): number {
-        read();
         return g[ZumoIMUDirection.Z];
     }
 
