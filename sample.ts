@@ -42,7 +42,7 @@ namespace zumo {
     //% subcategory=IMU
     export function readMKL(): number {
         const i2c = new I2C();
-        i2c.writeAccReg(0x20, 0x27); // turn Accelerometer on
+        i2c.writeAccReg(0x1d, 0x27); // turn Accelerometer on
         const a = i2c.readAcc();
         return a[2];
     }
