@@ -399,7 +399,7 @@ namespace zumo {
 
         ret1=enableDefault();
         ret2=configureForCompassHeading();
-        let restr =`init ${ret}, enable ${ret1} config ${ret2}`;
+        let restr =`init ${ret},  ${ret1}  ${ret2}`;
         return restr;
     }
 
