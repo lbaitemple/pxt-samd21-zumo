@@ -90,7 +90,8 @@ namespace zumo {
     const _LSM303ACCEL_MG_LSB = 16704.0
     const _GRAVITY_STANDARD = 9.80665      // Earth's gravity in m/s^2
     const _GAUSS_TO_MICROTESLA = 100.0        // Gauss to micro - Tesla multiplier
-
+    const _lsm303mag_gauss_lsb_xy = 1100.0
+    const _lsm303mag_gauss_lsb_z = 980.0
 
     let _i2c: I2C;
     let lastError = 0;
@@ -358,9 +359,9 @@ namespace zumo {
             readAxes16Bit(LIS3MDL_ADDR, LIS3MDL_REG_OUT_X_L | (1 << 7), mm);
         }
 
-        m[0] = convertToTwosComplement(mm[0]);
-        m[1] = convertToTwosComplement(mm[1]);
-        m[2] = convertToTwosComplement(mm[2]);
+        m[0] = convertToTwosComplement(mm[0])/ _lsm303mag_gauss_lsb_xy * _GAUSS_TO_MICROTESLA;
+        m[1] = convertToTwosComplement(mm[1]) / _lsm303mag_gauss_lsb_xy * _GAUSS_TO_MICROTESLA;
+        m[2] = convertToTwosComplement(mm[2]) / _lsm303mag_gauss_lsb_xy * _GAUSS_TO_MICROTESLA;
     }
 
     //% blockId=readIMUxp
