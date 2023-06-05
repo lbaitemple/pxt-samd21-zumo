@@ -213,14 +213,14 @@ namespace zumo{
     }
 
     //% blockId=MKLsensorstring
-    //% block="read Light Value in String"
+    //% block="read Light $value in String"
     //% subcategory=Light
-    export function readString(list: number[]): string {
-
+    export function readString(value: number[]): string {
+        
         let result: string = "";
-        for (let i = 0; i < list.length; i++) {
-            result += list[i].toString();
-            if (i < list.length - 1) {
+        for (let i = 0; i < value.length; i++) {
+            result += value[i].toString();
+            if (i < value.length - 1) {
                 result += ",";
             }
         }
