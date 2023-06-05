@@ -98,6 +98,7 @@ namespace zumo {
     let minread = MINREAD;
     let maxread = MAXREAD;
     let type = 0;
+    let aa: number[] = [0, 0, 0];
     let a: number[] = [0, 0, 0];
     let g: number[] = [0, 0, 0];
     let m: number[] = [0, 0, 0];
@@ -255,7 +256,7 @@ namespace zumo {
     }
 
     function readAcc(): void {
-        let aa = [0,0, 0];
+
 
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
@@ -273,6 +274,15 @@ namespace zumo {
         a[1] = convertToTwosComplement(aa[1]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
         a[2] = convertToTwosComplement(aa[2]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
     }
+
+    //% blockId=isTapped
+    //% block="isTapped"
+    //% subcategory=IMU
+    export function Tapped(): boolean {
+        return false;
+    }
+
+
 
     function convertToTwosComplement(num: number): number {
         const numBits = 16; // Assuming the number is represented using 16 bits
