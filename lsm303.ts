@@ -289,15 +289,23 @@ namespace zumo {
             case ZumoIMUType.LSM6DS33_LIS3MDL:
                 // assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
                 readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_XL, aa);
-                msga = `${aa[0]}, ${aa[1]}, ${aa[2]} `;
-                a[0] = (aa[0]-1) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
-                a[1] = aa[1] / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
-                a[2] = aa[2] / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
+                msga = `${convertToTwosComplement(aa[0], 16)}, ${aa[1]}, ${aa[2]} `;
+                a[0] = convertToTwosComplement(aa[0], 16) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
+                a[1] = convertToTwosComplement(aa[1], 16) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
+                a[2] = convertToTwosComplement(aa[2], 16) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
                 return;
         }
     }
 
-
+    function convertToTwosComplement(num: number, numBits: number): number {
+        const maxPositiveValue = Math.pow(2, numBits - 1) - 1;
+        if (num >= 0 && num <= maxPositiveValue) {
+            return num; // Number is already positive or zero
+        } else {
+            const maxNegativeValue = -Math.pow(2, numBits - 1);
+            return (num - maxNegativeValue) % Math.pow(2, numBits);
+        }
+    }
 
     function readAxes16Bit(addr: number, firstReg: number, v: number[]): void {
         let buffer = pins.createBuffer(6);
