@@ -273,6 +273,10 @@ namespace zumo {
         a[0] = convertToTwosComplement(aa[0]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
         a[1] = convertToTwosComplement(aa[1]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
         a[2] = convertToTwosComplement(aa[2]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
+        a[0] = Math.round(a[0] * 100) / 100;
+        a[1] = Math.round(a[1] * 100) / 100;
+        a[2] = Math.round(a[2] * 100) / 100;
+
     }
 
     //% blockId=isTapped
