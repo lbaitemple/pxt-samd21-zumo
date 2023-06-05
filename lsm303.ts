@@ -232,25 +232,6 @@ namespace zumo {
         lastError = pins.i2cWriteBuffer(addr, buffer);
     }
 
-/*    function readReg(addr: number, reg: number): number {
-        let value = 0;
-
-        let buffer = pins.createBuffer(1);
-        buffer[0] = reg;
-
-        lastError = pins.i2cWriteBuffer(addr, buffer);
-
-        let data = pins.i2cReadBuffer(addr, 1);
-        if (data.length != 1) {
-            lastError = 50;
-            return 0;
-        }
-
-        value = data[0];
-        return value;
-    }
-    */
-    
     function readReg(addr: number, reg: number): number {
         let result = 0;
 
@@ -278,23 +259,18 @@ namespace zumo {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
                 // set MSB of register address for auto-increment
-                readAxes16Bit(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_OUT_X_L_A | (1 << 7), a);
-                return;
-
+                readAxes16Bit(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_OUT_X_L_A | (1 << 7), aa);
             case ZumoIMUType.LSM303D_L3GD20H:
                 // set MSB of register address for auto-increment
-                readAxes16Bit(LSM303D_ADDR, LSM303D_REG_OUT_X_L_A | (1 << 7), a);
-                return;
+                readAxes16Bit(LSM303D_ADDR, LSM303D_REG_OUT_X_L_A | (1 << 7), aa);
 
             case ZumoIMUType.LSM6DS33_LIS3MDL:
                 // assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
                 readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_XL, aa);
-                msga = `${convertToTwosComplement(aa[0])}, ${aa[1]}, ${aa[2]} `;
-                a[0] = convertToTwosComplement(aa[0]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
-                a[1] = convertToTwosComplement(aa[1]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
-                a[2] = convertToTwosComplement(aa[2]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
-                return;
         }
+        a[0] = convertToTwosComplement(aa[0]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
+        a[1] = convertToTwosComplement(aa[1]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
+        a[2] = convertToTwosComplement(aa[2]) / _LSM303ACCEL_MG_LSB * _GRAVITY_STANDARD;
     }
 
     function convertToTwosComplement(num: number): number {
@@ -331,13 +307,19 @@ namespace zumo {
 
 
     function readGyro(): void {
+        let gg = [0, 0, 0];
         if (type == ZumoIMUType.LSM303D_L3GD20H) {
             // Set MSB of register address for auto-increment
-            readAxes16Bit(L3GD20H_ADDR, L3GD20H_REG_OUT_X_L | (1 << 7), g);
+            readAxes16Bit(L3GD20H_ADDR, L3GD20H_REG_OUT_X_L | (1 << 7), gg);
+
         } else if (type == ZumoIMUType.LSM6DS33_LIS3MDL) {
             // Assumes register address auto-increment is enabled (IF_INC in CTRL3_C)
-            readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_G, g);
+            readAxes16Bit(LSM6DS33_ADDR, LSM6DS33_REG_OUTX_L_G, gg);
         }
+        g[0] = convertToTwosComplement(gg[0]);
+        g[1] = convertToTwosComplement(gg[1]);
+        g[2] = convertToTwosComplement(gg[2]);
+
     }
     //% blockId=pullread
     //% block="pull read"
@@ -360,20 +342,25 @@ namespace zumo {
     }
 
     function readMag(): void {
+        let mm = [0, 0, 0];
         if (type == ZumoIMUType.LSM303DLHC) {
             // Magnetometer automatically increments register address
-            readAxes16Bit(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_OUT_X_H_M, m);
+            readAxes16Bit(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_OUT_X_H_M, mm);
             // readAxes16Bit assumes the sensor axis outputs are little-endian and in XYZ order.
             // However, the DLHC magnetometer outputs are big-endian and in XZY order,
             // so we need to shuffle the values around.
             m = [swapBytes(m[0]), swapBytes(m[2]), swapBytes(m[1])];
         } else if (type == ZumoIMUType.LSM303D_L3GD20H) {
             // Set MSB of register address for auto-increment
-            readAxes16Bit(LSM303D_ADDR, LSM303D_REG_OUT_X_L_M | (1 << 7), m);
+            readAxes16Bit(LSM303D_ADDR, LSM303D_REG_OUT_X_L_M | (1 << 7), mm);
         } else if (type == ZumoIMUType.LSM6DS33_LIS3MDL) {
             // Set MSB of register address for auto-increment
-            readAxes16Bit(LIS3MDL_ADDR, LIS3MDL_REG_OUT_X_L | (1 << 7), m);
+            readAxes16Bit(LIS3MDL_ADDR, LIS3MDL_REG_OUT_X_L | (1 << 7), mm);
         }
+
+        m[0] = convertToTwosComplement(mm[0]);
+        m[1] = convertToTwosComplement(mm[1]);
+        m[2] = convertToTwosComplement(mm[2]);
     }
 
     //% blockId=readIMUxp
