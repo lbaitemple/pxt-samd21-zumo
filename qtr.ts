@@ -201,7 +201,7 @@ namespace zumo{
         control.waitMicros(200);
     }
 
-    //% blockId=MKL
+    //% blockId=MKLsensor
     //% block="read Light Value"
     //% subcategory=Light
     export function readLine(): number[]{
@@ -212,5 +212,18 @@ namespace zumo{
         return sensor_values;
     }
 
+    //% blockId=MKLsensorstring
+    //% block="read Light Value in String"
+    //% subcategory=Light
+    export function readString(list: number[]): string {
 
+        let result: string = "";
+        for (let i = 0; i < list.length; i++) {
+            result += list[i].toString();
+            if (i < list.length - 1) {
+                result += ",";
+            }
+        }
+        return result;
+    }
 }
