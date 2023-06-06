@@ -8,12 +8,22 @@ namespace zumo{
     let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A0, pins.A2, pins.D5];
     let _numSensors = _pins.length;
     let _maxValue = 1023;
+    let _lastValue =0;
     let _err="";
     let _emitterPin = pins.D2;
     let calibratedMinimumOn: number [] =[0,0,0,0,0,0]
     let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0, 0]
     let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0, 0]
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0, 0]
+
+    //% blockId=MKLsensorstring
+    //% block="InitPins $value"
+    //% subcategory=Light
+    export function initPins(value: DigitalInOutPin[]): void {
+        if (value.length == _pins.length){
+            _pins = value;
+        }
+    }
 
     function readPrivate(sensor_values: number[]): void {
         let i: number;
@@ -193,6 +203,48 @@ namespace zumo{
             sensor_values[i] = x;
         }
         _err = "no err";
+    }
+
+    function readTargetLine(sensor_values: number[], readMode: number, white_line: boolean): number {
+        let on_line: number = 0;
+        let avg: number = 0;
+        let sum: number = 0;
+
+        readCalibrated(sensor_values, readMode);
+
+        avg = 0;
+        sum = 0;
+
+        for (let i = 0; i < sensor_values.length; i++) {
+            let value: number = sensor_values[i];
+            if (white_line)
+                value = 1000 - value;
+
+            // keep track of whether we see the line at all
+            if (value > 200) {
+                on_line = 1;
+            }
+
+            // only average in values that are above a noise threshold
+            if (value > 50) {
+                avg += value * (i * 1000);
+                sum += value;
+            }
+        }
+
+        if (!on_line) {
+            // If it last read to the left of center, return 0.
+            if (_lastValue < (sensor_values.length - 1) * 1000 / 2)
+                return 0;
+
+            // If it last read to the right of center, return the max.
+            else
+                return (sensor_values.length - 1) * 1000;
+        }
+
+        _lastValue = avg / sum;
+
+        return _lastValue;
     }
 
     function emittersOff(): void {
