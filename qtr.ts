@@ -6,7 +6,9 @@ const QTR_EMITTERS_ON_AND_OFF = 2
 namespace zumo{
     //unsigned char sensorPins[] = { 4, A3, 11, A0, A2, 5 };
     let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A0, pins.A2, pins.D5];
-    let _numSensors = _pins.length;
+    let _apins: AnalogInOutPin[] = [pins.A0, pins.A1];
+    let _numSensors = _apins.length;
+    let _numSamplesPerSensor =4;
     let _maxValue = 1023;
     let _lastValue =0;
     let _err="";
@@ -16,7 +18,7 @@ namespace zumo{
     let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0, 0]
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0, 0]
 
-    function readPrivate(sensor_values: number[]): void {
+/*    function readPrivate(sensor_values: number[]): void {
         let i: number;
 
         if (!_pins)
@@ -43,6 +45,25 @@ namespace zumo{
             }
         }
     }
+*/
+    function readPrivate(sensor_values: number[]): void {
+        let i : number;
+        for (i = 0; i < _numSensors; i++) {
+            sensor_values[i] = 0;
+        }
+
+        for (let j = 0; j < _numSamplesPerSensor; j++) {
+            for (let i = 0; i < _numSensors; i++) {
+                sensor_values[i] += _apins[i].analogRead();    
+            }
+        }
+
+        // Get the rounded average of the readings for each sensor
+        for (let i = 0; i < _numSensors; i++) {
+            sensor_values[i] = Math.round(sensor_values[i] / _numSamplesPerSensor);
+        }
+    }
+
 
     function resetCalibration(): void {
         let i: number;
