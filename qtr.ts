@@ -216,7 +216,7 @@ namespace zumo{
         return sensor_values;
     }
 
-    //% blockId=MKLsensor
+    //% blockId=MKLerrormsg
     //% block="error msg"
     //% subcategory=Light
     export function showerr(): string {
