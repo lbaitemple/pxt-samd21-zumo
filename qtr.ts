@@ -51,17 +51,18 @@ namespace zumo{
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = 0;
         }
-
+        _err="run1";
         for (let j = 0; j < _numSamplesPerSensor; j++) {
             for (let i = 0; i < _numSensors; i++) {
                 sensor_values[i] += _apins[i].analogRead();    
             }
         }
-
+        _err="run2";
         // Get the rounded average of the readings for each sensor
         for (let i = 0; i < _numSensors; i++) {
             sensor_values[i] = Math.round(sensor_values[i] / _numSamplesPerSensor);
         }
+        _err="run3";
     }
 
 
@@ -159,7 +160,6 @@ namespace zumo{
             (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_OFF) &&
             (!calibratedMinimumOff || !calibratedMaximumOff)
         ) {
-            _err ="err1";
             return;
         }
 
@@ -167,7 +167,6 @@ namespace zumo{
             (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) &&
             (!calibratedMinimumOn || !calibratedMaximumOn)
         ) {
-            _err = "err2";
             return;
         }
 
@@ -214,7 +213,6 @@ namespace zumo{
             }
             sensor_values[i] = x;
         }
-        _err = "no err";
     }
 
     function readTargetLine(sensor_values: number[], readMode: number, white_line: boolean): number {
