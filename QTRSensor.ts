@@ -28,12 +28,137 @@ namespace zumo {
         }
     }
 
+    //% block="show error msg"
+    //% subcategory=Light
+    export function Showerr(): string {
+        return _err;
+    }
+
+    //% block="read Light Number"
+    //% subcategory=Light
+    export function getLineNumber(): number {
+        return _lastValue;
+    }
+    //% block="read Light Values "
+    //% subcategory=Light
+    export function readLine(): number [] {
+        let sensor_values: number[] = [];
+        let onLine = 0;
+        let readMode: number = QTR_EMITTERS_ON;
+        let whiteLine = 0;
+
+        readCalibrated(sensor_values, readMode);
+        let avg: number = 0;
+        let sum: number = 0;
+        let i: number = 0;
+
+        for (i = 0; i < _numSensors; i++) {
+            let value = sensor_values[i];
+            if (whiteLine)
+                value = 1000 - value;
+
+            // keep track of whether we see the line at all
+            if (value > 200) {
+                onLine = 1;
+            }
+
+            // only average in values that are above a noise threshold
+            if (value > 50) {
+                avg += value * (i * 1000);
+                sum += value;
+            }
+        }
+
+        if (!onLine) {
+            // If it last read to the left of center, return 0.
+            if (_lastValue < (_numSensors - 1) * 1000 / 2)
+                _lastValue =  0;
+
+            // If it last read to the right of center, return the max.
+            else
+                _lastValue =  (_numSensors - 1) * 1000;
+        }
+
+        _lastValue = Math.idiv(avg, sum);
+
+        return sensor_values;
+    }
+
+    function readCalibrated(sensor_values: number[], readMode: number): void {
+        let i: number;
+
+        // if not calibrated, do nothing
+        if (
+            (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_OFF) &&
+            (!calibratedMinimumOff || !calibratedMaximumOff)
+        ) {
+            return;
+        }
+
+        if (
+            (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) &&
+            (!calibratedMinimumOn || !calibratedMaximumOn)
+        ) {
+            return;
+        }
+
+        // read the needed values
+        read(sensor_values, readMode);
+
+        for (i = 0; i < _numSensors; i++) {
+            let calmin: number, calmax: number;
+            let denominator: number;
+
+            // find the correct calibration
+            if (readMode === QTR_EMITTERS_ON) {
+                calmax = calibratedMaximumOn[i];
+                calmin = calibratedMinimumOn[i];
+            } else if (readMode === QTR_EMITTERS_OFF) {
+                calmax = calibratedMaximumOff[i];
+                calmin = calibratedMinimumOff[i];
+            } else {
+                if (calibratedMinimumOff[i] < calibratedMinimumOn[i]) {
+                    // no meaningful signal
+                    calmin = _maxValue;
+                } else {
+                    calmin = calibratedMinimumOn[i] + _maxValue - calibratedMinimumOff[i]; // this won't go past _maxValue
+                }
+
+                if (calibratedMaximumOff[i] < calibratedMaximumOn[i]) {
+                    // no meaningful signal
+                    calmax = _maxValue;
+                } else {
+                    calmax = calibratedMaximumOn[i] + _maxValue - calibratedMaximumOff[i]; // this won't go past _maxValue
+                }
+            }
+
+            denominator = calmax - calmin;
+
+            let x: number = 0;
+            if (denominator !== 0) {
+                x = (((sensor_values[i] as number) - calmin) * 1000) / denominator;
+            }
+            if (x < 0) {
+                //    _err ="here "
+                x = 0;
+            } else if (x > 1000) {
+                x = 1000;
+                //    _err="big";
+            }
+            sensor_values[i] = x;
+            _err = _err + "; " + `${x}`
+        }
+
+    }
+
 
     function readPrivate(sensor_values: number[]): void {
         let i: number;
 
-        if (!_pins)
+        if (!_pins){
+            _err ="something worng";
             return;
+        }
 
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;

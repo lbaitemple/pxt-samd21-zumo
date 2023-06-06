@@ -157,7 +157,7 @@ namespace zumo{
         }
     }
 
-    function readCalibrated(sensor_values: number[], readMode: number): void {
+    function qreadCalibrated(sensor_values: number[], readMode: number): void {
         let i: number;
 
         // if not calibrated, do nothing
@@ -229,7 +229,7 @@ namespace zumo{
         let avg: number = 0;
         let sum: number = 0;
 
-        readCalibrated(sensor_values, readMode);
+        qreadCalibrated(sensor_values, readMode);
 
         avg = 0;
         sum = 0;
@@ -288,13 +288,13 @@ namespace zumo{
     //% blockId=MKLsensor
     //% block="read Light Values as $sensor_values"
     //% subcategory=Light
-    export function readLine(sensor_values: number[]): number {
+    export function qreadLine(sensor_values: number[]): number {
         //let sensor_values: number[] = [];
         let onLine =0;
         let readMode: number = QTR_EMITTERS_ON;
         let whiteLine =0;
 
-        readCalibrated(sensor_values, readMode);
+        qreadCalibrated(sensor_values, readMode);
         let avg: number  = 0;
         let sum: number  = 0;
         let i:number = 0;
