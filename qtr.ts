@@ -207,14 +207,16 @@ namespace zumo{
                 x = (((sensor_values[i] as number) - calmin) * 1000) / denominator;
             }
             if (x < 0) {
-                _err ="here "
+            //    _err ="here "
                 x = 0;
             } else if (x > 1000) {
                 x = 1000;
-                _err="big";
+            //    _err="big";
             }
             sensor_values[i] = x;
+            _err = _err +"; " + `${x}`
         }
+
     }
 
     function readTargetLine(sensor_values: number[], readMode: number, white_line: boolean): number {
