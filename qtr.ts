@@ -16,15 +16,6 @@ namespace zumo{
     let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0, 0]
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0, 0]
 
-    //% blockId=MKLsensorstring
-    //% block="InitPins $value"
-    //% subcategory=Light
-    export function initPins(value: DigitalInOutPin[]): void {
-        if (value.length == _pins.length){
-            _pins = value;
-        }
-    }
-
     function readPrivate(sensor_values: number[]): void {
         let i: number;
 
