@@ -51,17 +51,17 @@ namespace zumo{
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = 0;
         }
-        _err="run1";
+//        _err="run1";
         for (let j = 0; j < _numSamplesPerSensor; j++) {
             for (let i = 0; i < _numSensors; i++) {
                 sensor_values[i] += _apins[i].analogRead();    
             }
         }
-        _err="run2";
+ //       _err="run2";
         // Get the rounded average of the readings for each sensor
         for (let i = 0; i < _numSensors; i++) {
             sensor_values[i] = Math.round(sensor_values[i] / _numSamplesPerSensor);
-            _err = _err +"; "+ `${sensor_values[i]}`;
+//            _err = _err +"; "+ `${sensor_values[i]}`;
         }
     }
 
@@ -207,9 +207,11 @@ namespace zumo{
                 x = (((sensor_values[i] as number) - calmin) * 1000) / denominator;
             }
             if (x < 0) {
+                _err ="here "
                 x = 0;
             } else if (x > 1000) {
                 x = 1000;
+                _err="big";
             }
             sensor_values[i] = x;
         }
