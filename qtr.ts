@@ -271,15 +271,59 @@ namespace zumo{
         control.waitMicros(200);
     }
 
-    //% blockId=MKLsensor
-    //% block="read Light Value"
-    //% subcategory=Light
-    export function readLine(): number[]{
+
+/*    export function readLine(): number[]{
         let sensor_values: number[] = [];
         let readMode: number = QTR_EMITTERS_ON_AND_OFF;
 
         readCalibrated(sensor_values, readMode);
         return sensor_values;
+    }
+*/
+    //% blockId=MKLsensor
+    //% block="read Light Values as $sensor_values"
+    //% subcategory=Light
+    export function readLine(sensor_values: number[]): number {
+        //let sensor_values: number[] = [];
+        let onLine =0;
+        let readMode: number = QTR_EMITTERS_ON;
+        let whiteLine =0;
+
+        readCalibrated(sensor_values, readMode);
+        let avg: number  = 0;
+        let sum: number  = 0;
+        let i:number = 0;
+
+        for (i = 0; i < _numSensors; i++) {
+            let value = sensor_values[i];
+            if (whiteLine)
+                value = 1000 - value;
+
+            // keep track of whether we see the line at all
+            if (value > 200) {
+                onLine = 1;
+            }
+
+            // only average in values that are above a noise threshold
+            if (value > 50) {
+                avg += value * (i * 1000);
+                sum += value;
+            }
+        }
+
+        if (!onLine) {
+            // If it last read to the left of center, return 0.
+            if (_lastValue < (_numSensors - 1) * 1000 / 2)
+                return 0;
+
+            // If it last read to the right of center, return the max.
+            else
+                return (_numSensors - 1) * 1000;
+        }
+
+        _lastValue = Math.idiv(avg, sum);
+
+        return _lastValue;
     }
 
     //% blockId=MKLerrormsg
