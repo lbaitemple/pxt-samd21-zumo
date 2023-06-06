@@ -21,8 +21,10 @@ namespace zumo{
     function readPrivate(sensor_values: number[]): void {
         let i: number;
 
-        if (!_pins)
+        if (!_pins){
+            _err ="nerere"
             return;
+        }
 
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;
@@ -135,6 +137,9 @@ namespace zumo{
         let off_values: number[] = [];
         let i: number;
 
+        for (let i = 0; i < _numSensors; i++) {
+            off_values.push(0);
+        }
         if (readMode === QTR_EMITTERS_ON || readMode === QTR_EMITTERS_ON_AND_OFF)
             emittersOn();
         else
