@@ -61,8 +61,8 @@ namespace zumo{
         // Get the rounded average of the readings for each sensor
         for (let i = 0; i < _numSensors; i++) {
             sensor_values[i] = Math.round(sensor_values[i] / _numSamplesPerSensor);
+            _err = _err + `${sensor_values[i]}`;
         }
-        _err="run3";
     }
 
 
