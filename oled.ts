@@ -78,7 +78,7 @@ namespace zumo {
     //% blockId=createI2C
     //% block="create I2C at scl $scl and sda $sda "
     //% scl.defl=pins.SCL
-    //% sda.defl=blocks.fieldPin("D10")
+    //% sda.defl=pins.SDA
     //% subcategory=SSD1306
     export function createI2C(scl: DigitalInOutPin, sda: DigitalInOutPin): void {
         _i2c = pins.createI2C(sda, scl);
