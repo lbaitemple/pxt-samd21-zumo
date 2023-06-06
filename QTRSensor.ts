@@ -17,7 +17,18 @@ namespace zumo {
     let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0, 0]
     let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0, 0]
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0, 0]
-    
+
+    //% block="Initialization Light Sensors"
+    //% subcategory=Light
+    export function Initialization(): void {
+        let startTime: number = control.millis();
+
+        while (control.millis() - startTime < 10000) {
+            calibrate(QTR_EMITTERS_ON);
+        }
+    }
+
+
     function readPrivate(sensor_values: number[]): void {
         let i: number;
 
@@ -81,5 +92,82 @@ namespace zumo {
         }
     }
 
+
+    function calibrate(readMode: number): void {
+        if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) {
+            calibrateOnOrOff(calibratedMinimumOn, calibratedMaximumOn, QTR_EMITTERS_ON);
+        }
+
+        if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_OFF) {
+            calibrateOnOrOff(calibratedMinimumOff, calibratedMaximumOff, QTR_EMITTERS_OFF);
+        }
+    }
+
+
+    function resetCalibration(): void {
+        let i: number;
+        for (i = 0; i < _numSensors; i++) {
+            if (calibratedMinimumOn)
+                calibratedMinimumOn[i] = _maxValue;
+            if (calibratedMinimumOff)
+                calibratedMinimumOff[i] = _maxValue;
+            if (calibratedMaximumOn)
+                calibratedMaximumOn[i] = 0;
+            if (calibratedMaximumOff)
+                calibratedMaximumOff[i] = 0;
+        }
+    }
+
+    function calibrateOnOrOff(
+        calibratedMinimum: number[],
+        calibratedMaximum: number[],
+        readMode: number
+    ): void {
+        let i: number;
+        let sensor_values: number[] = [];
+        let max_sensor_values: number[] = [];
+        let min_sensor_values: number[] = [];
+
+        // Allocate the arrays if necessary.
+        if (!calibratedMaximum) {
+            calibratedMaximum = [];
+            for (i = 0; i < _numSensors; i++) {
+                calibratedMaximum[i] = 0;
+            }
+        }
+
+        if (!calibratedMinimum) {
+            calibratedMinimum = [];
+            for (i = 0; i < _numSensors; i++) {
+                calibratedMinimum[i] = _maxValue;
+            }
+        }
+
+        let j: number;
+        for (j = 0; j < 10; j++) {
+            read(sensor_values, readMode);
+            for (i = 0; i < _numSensors; i++) {
+                // set the max we found THIS time
+                if (j === 0 || max_sensor_values[i] < sensor_values[i]) {
+                    max_sensor_values[i] = sensor_values[i];
+                }
+
+                // set the min we found THIS time
+                if (j === 0 || min_sensor_values[i] > sensor_values[i]) {
+                    min_sensor_values[i] = sensor_values[i];
+                }
+            }
+        }
+
+        // record the min and max calibration values
+        for (i = 0; i < _numSensors; i++) {
+            if (min_sensor_values[i] > calibratedMaximum[i]) {
+                calibratedMaximum[i] = min_sensor_values[i];
+            }
+            if (max_sensor_values[i] < calibratedMinimum[i]) {
+                calibratedMinimum[i] = max_sensor_values[i];
+            }
+        }
+    }
 
 }
