@@ -8,6 +8,7 @@ namespace zumo{
     let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A0, pins.A2, pins.D5];
     let _numSensors = _pins.length;
     let _maxValue = 1023;
+    let _err="";
     let _emitterPin = pins.D2;
     let calibratedMinimumOn: number [] =[0,0,0,0,0,0]
     let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0, 0]
@@ -136,6 +137,7 @@ namespace zumo{
             (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_OFF) &&
             (!calibratedMinimumOff || !calibratedMaximumOff)
         ) {
+            _err ="err1";
             return;
         }
 
@@ -143,6 +145,7 @@ namespace zumo{
             (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) &&
             (!calibratedMinimumOn || !calibratedMaximumOn)
         ) {
+            _err = "err2";
             return;
         }
 
@@ -189,6 +192,7 @@ namespace zumo{
             }
             sensor_values[i] = x;
         }
+        _err = "no err";
     }
 
     function emittersOff(): void {
@@ -212,6 +216,13 @@ namespace zumo{
         return sensor_values;
     }
 
+    //% blockId=MKLsensor
+    //% block="error msg"
+    //% subcategory=Light
+    export function showerr(): string {
+        
+        return _err;
+    }
     //% blockId=MKLsensorstring
     //% block="read Light $value in String"
     //% subcategory=Light
