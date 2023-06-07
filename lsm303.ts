@@ -373,10 +373,8 @@ namespace zumo {
         m[2] = convertToTwosComplement(mm[2]) / _lsm303mag_gauss_lsb_xy * _GAUSS_TO_MICROTESLA;
     }
 
-    //% blockId=readIMUxp
-    //% block="accDataReady"
-    //% subcategory=IMU
-    export function accDataReady(): boolean {
+
+    function accDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
                 return (readReg(LSM303DLHC_ACC_ADDR, LSM303DLHC_REG_STATUS_REG_A) & 0x08) !== 0;
