@@ -69,7 +69,7 @@ namespace zumo {
         return result;
     }
 
-    //% block="read Light Values "
+    //% block="read Line "
     //% subcategory=Light
     export function readLine(): number [] {
         let sensor_values: number[] = [];
