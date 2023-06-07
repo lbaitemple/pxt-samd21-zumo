@@ -173,7 +173,7 @@ namespace zumo {
     }
 
     //% subcategory=Motors
-    //% block="rotate motor $dir at $speed"
+    //% block="rotate motor $dir at $speed %"
     //% weight=88
     export function rotateMotor(speed: number, dir: ZumoMotorRotation): void {
         if (dir === ZumoMotorRotation.Forward){
