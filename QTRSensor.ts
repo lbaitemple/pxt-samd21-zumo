@@ -15,10 +15,10 @@ namespace zumo {
     let _lastValue = 0;
     let _err = "";
     let _emitterPin = pins.D2;
-    let calibratedMinimumOn: number[] = [0, 0, 0, 0, 0, 0]
-    let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0, 0]
-    let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0, 0]
-    let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0, 0]
+    let calibratedMinimumOn: number[] = [0, 0, 0, 0, 0]
+    let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0]
+    let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0]
+    let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0]
     let whiteLine = 0;
     
     //% block="Initialization Light Sensors"
