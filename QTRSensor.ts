@@ -9,7 +9,7 @@ namespace zumo {
     //let _apins: AnalogInOutPin[] = [pins.A0, pins.A1];
     let _numSensors = _pins.length;
     let _numSamplesPerSensor = 4;
-    let _maxValue = 1023;
+    let _maxValue = 2000;
     let _init = true;  // when _init = true, not set any signal to A0 - buzzer
     let _lastValue = 0;
     let _err = "";
@@ -280,25 +280,21 @@ namespace zumo {
         }
     }
 
-    function calibrateOnOrOff(
-        calibratedMinimum: number[],
-        calibratedMaximum: number[],
-        readMode: number
-    ): void {
+    function calibrateOnOrOff(calibratedMinimum: number[], calibratedMaximum: number[], readMode: number): void {
         let i: number;
         let sensor_values: number[] = [];
         let max_sensor_values: number[] = [];
         let min_sensor_values: number[] = [];
 
         // Allocate the arrays if necessary.
-        if (!calibratedMaximum) {
+        if (calibratedMaximum == null) {
             calibratedMaximum = [];
             for (i = 0; i < _numSensors; i++) {
                 calibratedMaximum[i] = 0;
             }
         }
 
-        if (!calibratedMinimum) {
+        if (calibratedMinimum == null) {
             calibratedMinimum = [];
             for (i = 0; i < _numSensors; i++) {
                 calibratedMinimum[i] = _maxValue;
@@ -330,7 +326,9 @@ namespace zumo {
                 calibratedMinimum[i] = max_sensor_values[i];
             }
         }
-        _err = "calibrate"
     }
+
+
+
 
 }
