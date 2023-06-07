@@ -1,7 +1,7 @@
 // Add your code here
-//const QTR_EMITTERS_OFF = 0
-//const QTR_EMITTERS_ON = 1
-//const QTR_EMITTERS_ON_AND_OFF = 2
+const QTR_EMITTERS_OFF = 0
+const QTR_EMITTERS_ON = 1
+const QTR_EMITTERS_ON_AND_OFF = 2
 
 namespace zumo {
 
