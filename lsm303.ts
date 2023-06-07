@@ -12,6 +12,12 @@ enum ZumoIMUDirection {
     Z
 }
 
+enum ZumoIMUMode {
+    ACC,
+    MAG,
+    GYRO
+}
+
 namespace zumo {
 
 
@@ -459,52 +465,21 @@ namespace zumo {
         return a[ZumoIMUDirection.X];
     }
     //% blockId=readIMUy
-    //% block="read readIMUAccy "
+    //% block="read readIMU $mode for $dir"
+    //% mode.defl = ZumoIMUMode.ACC
+    //% dir.defl = ZumoIMUDirection.X
     //% subcategory=IMU
-    export function readIMUAccy(): number {
-        return a[ZumoIMUDirection.Y];
+    export function readIMU(mode: ZumoIMUMode, dir:ZumoIMUDirection): number {
+        switch (mode){
+            case ZumoIMUMode.ACC:
+                return a[dir];
+            case ZumoIMUMode.MAG:
+                return m[dir];
+            case ZumoIMUMode.GYRO:
+                return g[dir];
+        }
+        
     }
-    //% blockId=readIMUz
-    //% block="read readIMUAccz "
-    //% subcategory=IMU
-    export function readIMUAccz(): number {
-        return a[ZumoIMUDirection.Z];
-    }
-    //% blockId=readIMUmx
-    //% block="read readIMUMagx "
-    //% subcategory=IMU
-    export function readIMUMagx(): number {
-        return m[ZumoIMUDirection.X];
-    }
-    //% blockId=readIMUmy
-    //% block="read readIMUMagy "
-    //% subcategory=IMU
-    export function readIMUMagy(): number {
-        return m[ZumoIMUDirection.Y];
-    }
-    //% blockId=readIMUmz
-    //% block="read readIMUMagz "
-    //% subcategory=IMU
-    export function readIMUMagz(): number {
-        return m[ZumoIMUDirection.Z];
-    }
-    //% blockId=readIMUgx
-    //% block="read readIMUGyrox "
-    //% subcategory=IMU
-    export function readIMUGyrox(): number {
-        return g[ZumoIMUDirection.X];
-    }
-    //% blockId=readIMUgy
-    //% block="read readIMUGyroy "
-    //% subcategory=IMU
-    export function readIMUGyroy(): number {
-        return g[ZumoIMUDirection.Y];
-    }
-    //% blockId=readIMUgz
-    //% block="read readIMUGyroz "
-    //% subcategory=IMU
-    export function readIMUGyroz(): number {
-        return g[ZumoIMUDirection.Z];
-    }
+
 
 }

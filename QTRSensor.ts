@@ -8,7 +8,7 @@ namespace zumo {
     let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A0, pins.A2, pins.D5];
     //let _apins: AnalogInOutPin[] = [pins.A0, pins.A1];
     let _numSensors = _pins.length;
-    let _numSamplesPerSensor = 4;
+    //let _numSamplesPerSensor = 4;
     let _maxValue = 2000;
     let _init = true;  // when _init = true, not set any signal to A0 - buzzer
     let _lastValue = 0;
