@@ -423,10 +423,9 @@ namespace zumo {
     /**
      * 
      */
-    //% blockId=enableIMU
     //% block="enable IMU "
     //% subcategory=IMU
-    export function enableIMU(): string {
+    export function enableIMU(): void {
         let ret = 0, ret1= 0, ret2=0;
         
         while (ret==0) {
@@ -437,7 +436,7 @@ namespace zumo {
         ret1=enableDefault();
         ret2=configureForCompassHeading();
         let restr =`init ${ret},  ${ret1}  ${ret2}`;
-        return restr;
+        return;
     }
 
     //% blockId=readIMUy
