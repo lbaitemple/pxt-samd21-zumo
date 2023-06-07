@@ -172,6 +172,21 @@ namespace zumo {
         }
     }
 
+    //% subcategory=Motors
+    //% block="rotate motor $dir at $speed"
+    //% weight=88
+    export function rotateMotor(speed: number, dir: ZumoMotorRotation): void {
+        if (dir === ZumoMotorRotation.Forward){
+            runMotor(ZumoMotor.left, speed)
+            runMotor(ZumoMotor.right, -speed)
+        }else{
+            runMotor(ZumoMotor.left, -speed)
+            runMotor(ZumoMotor.right, speed)
+
+        }
+        return
+    }
+
 
     //% blockId="zumo_led" block="Turn LED %state"
     //% weight=90
