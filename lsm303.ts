@@ -285,15 +285,6 @@ namespace zumo {
 
     }
 
-    //% blockId=isTapped
-    //% block="isTapped"
-    //% subcategory=IMU
-    export function Tapped(): boolean {
-        return false;
-    }
-
-
-
     function convertToTwosComplement(num: number): number {
         const numBits = 16; // Assuming the number is represented using 16 bits
         const maxPositiveValue = Math.pow(2, numBits - 1) - 1;
@@ -342,10 +333,8 @@ namespace zumo {
         g[2] = convertToTwosComplement(gg[2]);
 
     }
-    //% blockId=pullread
-    //% block="pull read"
-    //% subcategory=IMU
-    export function read(): void {
+
+    function lsmread(): void {
         while (!accDataReady()){
             control.waitMicros(40);
         }
@@ -400,10 +389,7 @@ namespace zumo {
         }
     }
 
-    //% blockId=readIMUgyro
-    //% block="gyroDataReady"
-    //% subcategory=IMU
-    export    function gyroDataReady(): boolean {
+    function gyroDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303D_L3GD20H:
                 return (readReg(L3GD20H_ADDR, L3GD20H_REG_STATUS) & 0x08) !== 0;
@@ -422,10 +408,8 @@ namespace zumo {
         return msg;
     }
 
-    //% blockId=readIMUmag
-    //% block="magDataReady"
-    //% subcategory=IMU
-    export    function magDataReady(): boolean {
+ 
+    function magDataReady(): boolean {
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
                 return (readReg(LSM303DLHC_MAG_ADDR, LSM303DLHC_REG_SR_REG_M) & 0x01) !== 0;
@@ -458,18 +442,13 @@ namespace zumo {
         return restr;
     }
 
-    //% blockId=readIMUx
-    //% block="read readIMUAccx "
-    //% subcategory=IMU
-    export function readIMUAccx(): number {
-        return a[ZumoIMUDirection.X];
-    }
     //% blockId=readIMUy
     //% block="read readIMU $mode for $dir"
     //% mode.defl = ZumoIMUMode.ACC
     //% dir.defl = ZumoIMUDirection.X
     //% subcategory=IMU
     export function readIMU(mode: ZumoIMUMode, dir:ZumoIMUDirection): number {
+        lsmread();
         switch (mode){
             case ZumoIMUMode.ACC:
                 return a[dir];
