@@ -10,6 +10,7 @@ namespace zumo {
     let _numSensors = _pins.length;
     let _numSamplesPerSensor = 4;
     let _maxValue = 1023;
+    let _init = true;
     let _lastValue = 0;
     let _err = "";
     let _emitterPin = pins.D2;
@@ -22,10 +23,12 @@ namespace zumo {
     //% subcategory=Light
     export function Initialization(): void {
         let startTime: number = control.millis();
+        _init = true;
 
         while (control.millis() - startTime < 10000) {
             calibrate(QTR_EMITTERS_ON);
         }
+        _init = false;
     }
 
     //% block="show error msg"
@@ -177,8 +180,10 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;
-            _pins[i].digitalWrite(true);
-            _pins[i].setPull(PinPullMode.PullNone);
+            if (_pins[i] == pins.A0 && !_init){
+                _pins[i].digitalWrite(true);
+                _pins[i].setPull(PinPullMode.PullNone);
+            }
         }
 
         control.waitMicros(10);   // charge lines for 10 us
