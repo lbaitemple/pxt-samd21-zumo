@@ -18,7 +18,8 @@ namespace zumo {
     let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0, 0]
     let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0, 0]
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0, 0]
-
+    let whiteLine = 0;
+    
     //% block="Initialization Light Sensors"
     //% subcategory=Light
     export function Initialization(): void {
@@ -75,7 +76,7 @@ namespace zumo {
         let sensor_values: number[] = [];
         let onLine = 0;
         let readMode: number = QTR_EMITTERS_ON;
-        let whiteLine = 0;
+
 
         readCalibrated(sensor_values, readMode);
         let avg: number = 0;
