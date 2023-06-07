@@ -177,7 +177,7 @@ namespace zumo {
                 //    _err="big";
             }
             sensor_values[i] = x;
-            _err = _err + "; " + `${x}`
+            _err = _err + "; nogood   " + `${x}`
         }
 
     }
