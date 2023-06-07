@@ -330,6 +330,7 @@ namespace zumo {
                 calibratedMinimum[i] = max_sensor_values[i];
             }
         }
+        _err = "calibrate"
     }
 
 }
