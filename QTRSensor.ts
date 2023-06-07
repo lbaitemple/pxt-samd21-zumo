@@ -10,7 +10,7 @@ namespace zumo {
     let _numSensors = _pins.length;
     let _numSamplesPerSensor = 4;
     let _maxValue = 1023;
-    let _init = true;
+    let _init = true;  // when _init = true, not set any signal to A0 - buzzer
     let _lastValue = 0;
     let _err = "";
     let _emitterPin = pins.D2;
@@ -180,7 +180,12 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;
-            if (_pins[i] == pins.A0 && !_init){
+            // when _init = true, not set any signal to A0 - buzzer
+            
+            if (_pins[i] == pins.A0 && _init){
+//                _pins[i].digitalWrite(true);
+//                _pins[i].setPull(PinPullMode.PullNone);
+            }else{
                 _pins[i].digitalWrite(true);
                 _pins[i].setPull(PinPullMode.PullNone);
             }
