@@ -290,18 +290,11 @@ namespace zumo {
         let min_sensor_values: number[] = [];
 
         // Allocate the arrays if necessary.
-        if (calibratedMaximum == null) {
-            calibratedMaximum = [];
-            for (i = 0; i < _numSensors; i++) {
+        for (i = 0; i < _numSensors; i++) {
                 calibratedMaximum[i] = 0;
-            }
         }
-
-        if (calibratedMinimum == null) {
-            calibratedMinimum = [];
-            for (i = 0; i < _numSensors; i++) {
-                calibratedMinimum[i] = _maxValue;
-            }
+        for (i = 0; i < _numSensors; i++) {
+            calibratedMinimum[i] = _maxValue;
         }
 
         let j: number;
