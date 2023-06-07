@@ -11,7 +11,6 @@
         "lsm303.ts",
         "zumo.ts",
         "ns.ts",
-        "qtr.ts",
         "QTRSensor.ts"
     ],
     "testFiles": [],
