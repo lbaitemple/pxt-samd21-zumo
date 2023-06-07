@@ -39,6 +39,21 @@ namespace zumo {
     export function getLineNumber(): number {
         return _lastValue;
     }
+
+    //% block="read sensor_values $value as a string"
+    //% subcategory=Light
+    export function readString(value: number[]): string {
+
+        let result: string = "";
+        for (let i = 0; i < value.length; i++) {
+            result += value[i].toString();
+            if (i < value.length - 1) {
+                result += ",";
+            }
+        }
+        return result;
+    }
+
     //% block="read Light Values "
     //% subcategory=Light
     export function readLine(): number [] {
