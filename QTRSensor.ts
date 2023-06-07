@@ -31,6 +31,18 @@ namespace zumo {
         _init = false;
     }
 
+    //% block="return calibratedMinimumOn_values"
+    //% subcategory=Light
+    export function calibratedMinimumOn_values(): number [] {
+        return calibratedMinimumOn;
+    }
+
+    //% block="return calibratedMaximumOn_values"
+    //% subcategory=Light
+    export function calibratedMaximumOn_values(): number[] {
+        return calibratedMaximumOn;
+    }
+
     //% block="show error msg"
     //% subcategory=Light
     export function Showerr(): string {
