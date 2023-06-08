@@ -35,9 +35,11 @@ namespace zumo {
 
         if (type==Lightype.DIGITAL){
             _numSensors = _pins.length;
+            _maxValue = 2000;
         }
         else{
             _numSensors = _apins.length;
+            _maxValue = 1023;
         }
         calibratedMinimumOn = initializeArrayWithZeros(_numSensors)
         calibratedMaximumOn = initializeArrayWithZeros(_numSensors)
