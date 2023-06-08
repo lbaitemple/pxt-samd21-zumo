@@ -25,7 +25,7 @@ namespace zumo {
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0]
     let whiteLine = 0;
     
-    //% block="Initialization Light $type Sensors"
+    //% block="Initialization $type Light Sensors"
     //% type.defl = Lightype.DIGITAL
     //% subcategory=Light
     export function Initialization(type:Lightype = Lightype.DIGITAL): void {
