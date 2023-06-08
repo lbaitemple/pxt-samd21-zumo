@@ -2,14 +2,18 @@
 const QTR_EMITTERS_OFF = 0
 const QTR_EMITTERS_ON = 1
 const QTR_EMITTERS_ON_AND_OFF = 2
+enum Lightype {
+    DIGITAL,
+    ANALOG
+}
 
 namespace zumo {
 
 //    let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A0, pins.A2, pins.D5];
     let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A2, pins.D5];
-    //let _apins: AnalogInOutPin[] = [pins.A0, pins.A1];
+    let _apins: AnalogInOutPin[] = [pins.A0, pins.A1];
     let _numSensors = _pins.length;
-    //let _numSamplesPerSensor = 4;
+    let _numSamplesPerSensor = 4;
     let _maxValue = 2000;
     let _init = true;  // when _init = true, not set any signal to A0 - buzzer
     let _lastValue = 0;
@@ -21,11 +25,24 @@ namespace zumo {
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0]
     let whiteLine = 0;
     
-    //% block="Initialization Light Sensors"
+    //% block="Initialization Light $type Sensors"
+    //% type.defl = Lightype.DIGITAL
     //% subcategory=Light
-    export function Initialization(): void {
+    export function Initialization(type:Lightype = Lightype.DIGITAL): void {
         let startTime: number = control.millis();
         _init = true;
+        let i: number;
+
+        if (type==Lightype.DIGITAL){
+            _numSensors = _pins.length;
+        }
+        else{
+            _numSensors = _apins.length;
+        }
+        calibratedMinimumOn = initializeArrayWithZeros(_numSensors)
+        calibratedMaximumOn = initializeArrayWithZeros(_numSensors)
+        calibratedMinimumOff = initializeArrayWithZeros(_numSensors)
+        calibratedMaximumOff = initializeArrayWithZeros(_numSensors)
 
         while (control.millis() - startTime < 10000) {
             calibrate(QTR_EMITTERS_ON);
@@ -116,7 +133,15 @@ namespace zumo {
         return sensor_values;
     }
 
-    function readCalibrated(sensor_values: number[], readMode: number): void {
+    function initializeArrayWithZeros(n: number): number[] {
+        const zerosArray: number[] = [];
+        for (let i = 0; i < n; i++) {
+            zerosArray.push(0);
+        }
+        return zerosArray;
+    }
+
+    function readCalibrated(sensor_values: number[], readMode: number, sensor: Lightype =Lightype.DIGITAL ): void {
         let i: number;
 
         // if not calibrated, do nothing
@@ -221,6 +246,29 @@ namespace zumo {
         }
     }
 
+
+    function readAnalogPrivate(sensor_values: number[]): void {
+        if (_apins === null) {
+            return;
+        }
+
+        // Reset the values
+        for (let i = 0; i < _numSensors; i++) {
+            sensor_values[i] = 0;
+        }
+
+        for (let j = 0; j < _numSamplesPerSensor; j++) {
+            for (let i = 0; i < _numSensors; i++) {
+                sensor_values[i] += _apins[i].analogRead();// Add the conversion result
+            }
+        }
+
+        // Get the rounded average of the readings for each sensor
+        for (let i = 0; i < _numSensors; i++) {
+            sensor_values[i] = Math.round(sensor_values[i] / _numSamplesPerSensor);
+        }
+    }
+
     function emittersOff(): void {
         _emitterPin.digitalWrite(false);
         control.waitMicros(200);
@@ -231,7 +279,7 @@ namespace zumo {
         control.waitMicros(200);
     }
 
-    function read(sensor_values: number[], readMode: number): void {
+    function read(sensor_values: number[], readMode: number, sensor: Lightype = Lightype.DIGITAL): void {
         let off_values: number[] = [];
         for (let i = 0; i < _numSensors; i++) {
             off_values.push(0);
@@ -244,12 +292,21 @@ namespace zumo {
         else
             emittersOff();
 
-        readPrivate(sensor_values);
+        if (sensor === Lightype.DIGITAL){
+            readPrivate(sensor_values);
+        }
+        else{
+            readAnalogPrivate(sensor_values);
+        }
         emittersOff();
 
         if (readMode === QTR_EMITTERS_ON_AND_OFF) {
-            readPrivate(off_values);
-
+            if (sensor === Lightype.DIGITAL) {
+                readPrivate(off_values);
+            }
+            else {
+                readAnalogPrivate(off_values);
+            }
             for (i = 0; i < _numSensors; i++) {
                 sensor_values[i] += _maxValue - off_values[i];
             }
