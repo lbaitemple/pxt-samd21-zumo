@@ -15,6 +15,7 @@ namespace zumo {
     let _numSensors = _pins.length;
     let _numSamplesPerSensor = 4;
     let _maxValue = 2000;
+    let _sensorType = Lightype.DIGITAL
     let _init = true;  // when _init = true, not set any signal to A0 - buzzer
     let _lastValue = 0;
     let _err = "";
@@ -33,6 +34,7 @@ namespace zumo {
         _init = true;
         let i: number;
 
+        _sensorType = type
         if (type==Lightype.DIGITAL){
             _numSensors = _pins.length;
             _maxValue = 2000;
@@ -281,7 +283,7 @@ namespace zumo {
         control.waitMicros(200);
     }
 
-    function read(sensor_values: number[], readMode: number, sensor: Lightype = Lightype.DIGITAL): void {
+    function read(sensor_values: number[], readMode: number): void {
         let off_values: number[] = [];
         for (let i = 0; i < _numSensors; i++) {
             off_values.push(0);
@@ -294,7 +296,7 @@ namespace zumo {
         else
             emittersOff();
 
-        if (sensor === Lightype.DIGITAL){
+        if (_sensorType === Lightype.DIGITAL){
             readPrivate(sensor_values);
         }
         else{
@@ -303,7 +305,7 @@ namespace zumo {
         emittersOff();
 
         if (readMode === QTR_EMITTERS_ON_AND_OFF) {
-            if (sensor === Lightype.DIGITAL) {
+            if (_sensorType === Lightype.DIGITAL) {
                 readPrivate(off_values);
             }
             else {
