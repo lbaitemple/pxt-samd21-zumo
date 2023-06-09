@@ -238,6 +238,7 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
             _pins[i].digitalWrite(false);
+            _pins[i].setPull(PinPullMode.PullNone); // important: disable internal pull-up!
         }
 
         let startTime = control.micros();
