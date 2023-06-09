@@ -76,7 +76,7 @@ namespace zumo {
     //% block="read Light Number"
     //% subcategory=Light
     export function getLineNumber(): number {
-        return _lastValue;
+        return _line;
     }
 
     //% block="read sensor_values $value as a string"
