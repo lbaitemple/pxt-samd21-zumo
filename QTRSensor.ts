@@ -15,6 +15,7 @@ namespace zumo {
     let _numSensors = _pins.length;
     let _numSamplesPerSensor = 4;
     let _maxValue = 2000;
+    let _line = 0;
     let _sensorType = Lightype.DIGITAL
     let _init = true;  // when _init = true, not set any signal to A0 - buzzer
     let _lastValue = 0;
@@ -125,15 +126,15 @@ namespace zumo {
         if (!onLine) {
             // If it last read to the left of center, return 0.
             if (_lastValue < (_numSensors - 1) * 1000 / 2)
-                _lastValue =  0;
+                _line =  0;
 
             // If it last read to the right of center, return the max.
             else
-                _lastValue =  (_numSensors - 1) * 1000;
+                _line =  (_numSensors - 1) * 1000;
         }
 
         _lastValue = Math.idiv(avg, sum);
-
+        _line = _lastValue;
         return sensor_values;
     }
 
