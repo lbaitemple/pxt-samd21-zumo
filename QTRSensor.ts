@@ -48,10 +48,11 @@ namespace zumo {
         calibratedMaximumOn = initializeArrayWithZeros(_numSensors)
         calibratedMinimumOff = initializeArrayWithZeros(_numSensors)
         calibratedMaximumOff = initializeArrayWithZeros(_numSensors)
-
+        pins.D13.digitalWrite(true);
         while (control.millis() - startTime < 10000) {
             calibrate(QTR_EMITTERS_ON);
         }
+        pins.D13.digitalWrite(false);
         _init = false;
     }
 
