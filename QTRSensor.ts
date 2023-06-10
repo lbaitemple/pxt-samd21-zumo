@@ -247,9 +247,9 @@ namespace zumo {
             for (i = 0; i < _numSensors; i++) {
                 if (_pins[i].digitalRead() == false && time < sensor_values[i]){
                     sensor_values[i] = time;
-                    _err += ":read here"
+                    _err = _err + ":read here "
                 }else{
-                    _err +=":no time baed"
+                    _err = _err + ":no time based "
                 }
             }
         }
