@@ -55,12 +55,14 @@ namespace zumo {
         _init = false;
     }
 
-
+    //% block="show calibratedMinimumOn values"
+    //% subcategory=Light
     function calibratedMinimumOn_values(): number [] {
         return calibratedMinimumOn;
     }
 
-
+    //% block="show calibratedMaximumOn values"
+    //% subcategory=Light
     function calibratedMaximumOn_values(): number[] {
         return calibratedMaximumOn;
     }
