@@ -197,7 +197,8 @@ namespace zumo {
 
             let x: number = 0;
             if (denominator !== 0) {
-                x = (((sensor_values[i] as number) - calmin) * 1000) / denominator;
+               // x = (((sensor_values[i] as number) - calmin) * 1000) / denominator;
+                x = Math.idiv(((sensor_values[i] as number) - calmin) * 1000, denominator)
             }
             if (x < 0) {
                 //    _err ="here "
