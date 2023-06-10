@@ -36,7 +36,7 @@ namespace zumo {
         let i: number;
 
         _sensorType = type
-        if (type==Lightype.DIGITAL){
+        if (type===Lightype.DIGITAL){
             _numSensors = _pins.length;
             _maxValue = 2000;
         }
@@ -224,7 +224,7 @@ namespace zumo {
             sensor_values[i] = _maxValue;
             // when _init = true, not set any signal to A0 - buzzer
             
-            if (_pins[i] == pins.A0 && _init){
+            if (_pins[i] === pins.A0 && _init){
 //                _pins[i].digitalWrite(true);
 //                _pins[i].setPull(PinPullMode.PullNone);
             }else{
@@ -245,11 +245,11 @@ namespace zumo {
         while (control.micros() - startTime < _maxValue) {
             let time = control.micros() - startTime;
             for (i = 0; i < _numSensors; i++) {
-                if (_pins[i].digitalRead() === false && time < sensor_values[i]){
+                if (_pins[i].digitalRead() == false && time < sensor_values[i]){
                     sensor_values[i] = time;
-                    _err = ":read here "
+                    _err = ":read here " + _pins[i].digitalRead()
                 }else{
-                    _err =  ":no time based "
+                    _err = ":no time based " + _pins[i].digitalRead()
                 }
             }
         }
