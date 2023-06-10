@@ -222,6 +222,7 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;
+            _err = _maxValue.toString();
             // when _init = true, not set any signal to A0 - buzzer
             
             if (_pins[i] === pins.A0 && _init){
