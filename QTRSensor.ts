@@ -86,7 +86,7 @@ namespace zumo {
         for (let i = 0; i < value.length; i++) {
             result += value[i].toString();
             if (i < value.length - 1) {
-                result += ",";
+                result += ", ";
             }
         }
         return result;
