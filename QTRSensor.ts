@@ -245,7 +245,7 @@ namespace zumo {
         while (control.micros() - startTime < _maxValue) {
             let time = control.micros() - startTime;
             for (i = 0; i < _numSensors; i++) {
-                if (_pins[i].digitalRead() == false && time < sensor_values[i]){
+                if (_pins[i].digitalRead() === false && time < sensor_values[i]){
                     sensor_values[i] = time;
                     _err = ":read here "
                 }else{
