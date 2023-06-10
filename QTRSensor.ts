@@ -86,7 +86,7 @@ namespace zumo {
         for (let i = 0; i < value.length; i++) {
             result += value[i].toString();
             if (i < value.length - 1) {
-                result += ",";
+                result += "\r\n";
             }
         }
         return result;
@@ -200,14 +200,11 @@ namespace zumo {
                 x = (((sensor_values[i] as number) - calmin) * 1000) / denominator;
             }
             if (x < 0) {
-                //    _err ="here "
                 x = 0;
             } else if (x > 1000) {
                 x = 1000;
-                //    _err="big";
             }
             sensor_values[i] = x;
-            //_err = _err + "; nogood   " + `${x}`
         }
 
     }
