@@ -48,23 +48,20 @@ namespace zumo {
         calibratedMaximumOn = initializeArrayWithZeros(_numSensors)
         calibratedMinimumOff = initializeArrayWithZeros(_numSensors)
         calibratedMaximumOff = initializeArrayWithZeros(_numSensors)
-        pins.D13.digitalWrite(true);
+
         while (control.millis() - startTime < 10000) {
             calibrate(QTR_EMITTERS_ON);
         }
-        pins.D13.digitalWrite(false);
         _init = false;
     }
 
-    //% block="return calibratedMinimumOn_values"
-    //% subcategory=Light
-    export function calibratedMinimumOn_values(): number [] {
+
+    function calibratedMinimumOn_values(): number [] {
         return calibratedMinimumOn;
     }
 
-    //% block="return calibratedMaximumOn_values"
-    //% subcategory=Light
-    export function calibratedMaximumOn_values(): number[] {
+
+    function calibratedMaximumOn_values(): number[] {
         return calibratedMaximumOn;
     }
 
@@ -83,7 +80,6 @@ namespace zumo {
     //% block="read sensor_values $value as a string"
     //% subcategory=Light
     export function readString(value: number[]): string {
-
         let result: string = "";
         for (let i = 0; i < value.length; i++) {
             result += value[i].toString();
