@@ -70,7 +70,7 @@ namespace zumo {
     //% block="show error msg"
     //% subcategory=Light
     export function Showerr(): string {
-        return _err1 + "<<>>>" +  _err ;
+        return _err1 + "<<>>" +  _err ;
     }
 
     //% block="read Light Number"
@@ -171,10 +171,10 @@ namespace zumo {
             let denominator: number;
 
             // find the correct calibration
-            if (readMode === QTR_EMITTERS_ON) {
+            if (readMode == QTR_EMITTERS_ON) {
                 calmax = calibratedMaximumOn[i];
                 calmin = calibratedMinimumOn[i];
-            } else if (readMode === QTR_EMITTERS_OFF) {
+            } else if (readMode == QTR_EMITTERS_OFF) {
                 calmax = calibratedMaximumOff[i];
                 calmin = calibratedMinimumOff[i];
             } else {
@@ -298,12 +298,12 @@ namespace zumo {
     
         let i: number;
 
-        if (readMode === QTR_EMITTERS_ON || readMode === QTR_EMITTERS_ON_AND_OFF)
+        if (readMode == QTR_EMITTERS_ON || readMode === QTR_EMITTERS_ON_AND_OFF)
             emittersOn();
         else
             emittersOff();
 
-        if (_sensorType === Lightype.DIGITAL){
+        if (_sensorType == Lightype.DIGITAL){
             readPrivate(sensor_values);
         }
         else{
@@ -311,8 +311,8 @@ namespace zumo {
         }
         emittersOff();
 
-        if (readMode === QTR_EMITTERS_ON_AND_OFF) {
-            if (_sensorType === Lightype.DIGITAL) {
+        if (readMode == QTR_EMITTERS_ON_AND_OFF) {
+            if (_sensorType == Lightype.DIGITAL) {
                 readPrivate(off_values);
             }
             else {
