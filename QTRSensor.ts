@@ -14,7 +14,7 @@ namespace zumo {
     let _apins: AnalogInOutPin[] = [pins.A0, pins.A1];
     let _numSensors = _pins.length;
     let _numSamplesPerSensor = 4;
-    let _maxValue = 2000;
+    let _maxValue = 2000; 
     let _line = 0;
     let _sensorType = Lightype.DIGITAL
     let _init = true;  // when _init = true, not set any signal to A0 - buzzer
@@ -293,7 +293,7 @@ namespace zumo {
         /*for (let i = 0; i < _numSensors; i++) {
             off_values.push(0);
         }*/
-        off_values = initializeArrayWithZeros(_numSensors)
+        off_values = initializeArrayWithZeros(_numSensors);
         let i: number;
 
         if (readMode == QTR_EMITTERS_ON || readMode === QTR_EMITTERS_ON_AND_OFF)
