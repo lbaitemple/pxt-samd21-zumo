@@ -280,22 +280,20 @@ namespace zumo {
 
     function emittersOff(): void {
         _emitterPin.digitalWrite(false);
-//        pause(0.2);
         control.waitMicros(200);
     }
 
     function emittersOn(): void {
         _emitterPin.digitalWrite(true);
-        pause(0.2)
         control.waitMicros(200);
     }
 
     function read(sensor_values: number[], readMode: number): void {
         let off_values: number[] = [];
-        for (let i = 0; i < _numSensors; i++) {
+        /*for (let i = 0; i < _numSensors; i++) {
             off_values.push(0);
-        }
-    
+        }*/
+        off_values = initializeArrayWithZeros(_numSensors)
         let i: number;
 
         if (readMode == QTR_EMITTERS_ON || readMode === QTR_EMITTERS_ON_AND_OFF)
