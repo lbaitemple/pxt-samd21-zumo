@@ -367,12 +367,12 @@ namespace zumo {
             read(sensor_values, readMode);
             for (i = 0; i < _numSensors; i++) {
                 // set the max we found THIS time
-                if (j === 0 || max_sensor_values[i] < sensor_values[i]) {
+                if (j == 0 || max_sensor_values[i] < sensor_values[i]) {
                     max_sensor_values[i] = sensor_values[i];
                 }
 
                 // set the min we found THIS time
-                if (j === 0 || min_sensor_values[i] > sensor_values[i]) {
+                if (j == 0 || min_sensor_values[i] > sensor_values[i]) {
                     min_sensor_values[i] = sensor_values[i];
                 }
             }
