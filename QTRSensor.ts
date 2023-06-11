@@ -36,7 +36,7 @@ namespace zumo {
         let i: number;
 
         _sensorType = type
-        if (type==Lightype.DIGITAL){
+        if (type===Lightype.DIGITAL){
             _numSensors = _pins.length;
             _maxValue = 2000;
         }
@@ -150,14 +150,14 @@ namespace zumo {
 
         // if not calibrated, do nothing
         if (
-            (readMode == QTR_EMITTERS_ON_AND_OFF || readMode == QTR_EMITTERS_OFF) &&
+            (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_OFF) &&
             (!calibratedMinimumOff || !calibratedMaximumOff)
         ) {
             return;
         }
 
         if (
-            (readMode == QTR_EMITTERS_ON_AND_OFF || readMode == QTR_EMITTERS_ON) &&
+            (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) &&
             (!calibratedMinimumOn || !calibratedMaximumOn)
         ) {
             return;
@@ -171,10 +171,10 @@ namespace zumo {
             let denominator: number;
 
             // find the correct calibration
-            if (readMode == QTR_EMITTERS_ON) {
+            if (readMode === QTR_EMITTERS_ON) {
                 calmax = calibratedMaximumOn[i];
                 calmin = calibratedMinimumOn[i];
-            } else if (readMode == QTR_EMITTERS_OFF) {
+            } else if (readMode === QTR_EMITTERS_OFF) {
                 calmax = calibratedMaximumOff[i];
                 calmin = calibratedMinimumOff[i];
             } else {
@@ -226,7 +226,7 @@ namespace zumo {
             _err = _maxValue.toString();
             // when _init = true, not set any signal to A0 - buzzer
             
-            if (_pins[i] == pins.A0 && _init){
+            if (_pins[i] === pins.A0 && _init){
 //                _pins[i].digitalWrite(true);
 //                _pins[i].setPull(PinPullMode.PullNone);
             }else{
@@ -247,7 +247,7 @@ namespace zumo {
         while (control.micros() - startTime < _maxValue) {
             let time = control.micros() - startTime;
             for (i = 0; i < _numSensors; i++) {
-                if (_pins[i].digitalRead() == false && time < sensor_values[i])
+                if (_pins[i].digitalRead() === false && time < sensor_values[i])
                     sensor_values[i] = time;
             }
         }
@@ -255,7 +255,7 @@ namespace zumo {
 
 
     function readAnalogPrivate(sensor_values: number[]): void {
-        if (_apins == null) {
+        if (_apins === null) {
             return;
         }
 
@@ -296,12 +296,12 @@ namespace zumo {
     
         let i: number;
 
-        if (readMode == QTR_EMITTERS_ON || readMode == QTR_EMITTERS_ON_AND_OFF)
+        if (readMode === QTR_EMITTERS_ON || readMode === QTR_EMITTERS_ON_AND_OFF)
             emittersOn();
         else
             emittersOff();
 
-        if (_sensorType == Lightype.DIGITAL){
+        if (_sensorType === Lightype.DIGITAL){
             readPrivate(sensor_values);
         }
         else{
@@ -309,8 +309,8 @@ namespace zumo {
         }
         emittersOff();
 
-        if (readMode == QTR_EMITTERS_ON_AND_OFF) {
-            if (_sensorType == Lightype.DIGITAL) {
+        if (readMode === QTR_EMITTERS_ON_AND_OFF) {
+            if (_sensorType === Lightype.DIGITAL) {
                 readPrivate(off_values);
             }
             else {
@@ -324,11 +324,11 @@ namespace zumo {
 
 
     function calibrate(readMode: number): void {
-        if (readMode == QTR_EMITTERS_ON_AND_OFF || readMode == QTR_EMITTERS_ON) {
+        if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) {
             calibrateOnOrOff(calibratedMinimumOn, calibratedMaximumOn, QTR_EMITTERS_ON);
         }
 
-        if (readMode == QTR_EMITTERS_ON_AND_OFF || readMode == QTR_EMITTERS_OFF) {
+        if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_OFF) {
             calibrateOnOrOff(calibratedMinimumOff, calibratedMaximumOff, QTR_EMITTERS_OFF);
         }
     }
