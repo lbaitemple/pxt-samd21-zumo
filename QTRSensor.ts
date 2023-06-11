@@ -233,8 +233,8 @@ namespace zumo {
                 _pins[i].digitalWrite(true);
                 _pins[i].setPull(PinPullMode.PullNone);
             }
-            _err1 = sensor_values[i].toString() + ":" + _maxValue.toString();
         }
+        _err1 = sensor_values[_numSensors-1].toString() + ":" + _maxValue.toString();
 
         control.waitMicros(10);   // charge lines for 10 us
 //        pause(0.01)
@@ -248,10 +248,10 @@ namespace zumo {
         while (control.micros() - startTime < _maxValue) {
             let time = control.micros() - startTime;
             for (i = 0; i < _numSensors; i++) {
-                _err = time.toString() + " " + sensor_values[i].toString();
                 if (_pins[i].digitalRead() == false && time < sensor_values[i])
                     sensor_values[i] = time;
             }
+            _err = time.toString() + " " + sensor_values[_numSensors-1].toString();
         }
     }
 
