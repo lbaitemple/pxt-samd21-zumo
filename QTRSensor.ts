@@ -226,7 +226,7 @@ namespace zumo {
             //_err = _maxValue.toString();
             // when _init = true, not set any signal to A0 - buzzer
             
-            if (_pins[i] === pins.A0 && _init){
+            if (_pins[i] == pins.A0 && _init){
 //                _pins[i].digitalWrite(true);
 //                _pins[i].setPull(PinPullMode.PullNone);
             }else{
@@ -236,7 +236,7 @@ namespace zumo {
         }
 
         control.waitMicros(10);   // charge lines for 10 us
-//        pause(0.01)
+
 
         for (i = 0; i < _numSensors; i++) {
             _pins[i].digitalWrite(false);
