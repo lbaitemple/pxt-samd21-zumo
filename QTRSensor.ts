@@ -19,7 +19,7 @@ namespace zumo {
     let _sensorType = Lightype.DIGITAL
     let _init = true;  // when _init = true, not set any signal to A0 - buzzer
     let _lastValue = 0;
-    let _err = "";
+    let _err = "", _err1="";
     let _emitterPin = pins.D2;
     let calibratedMinimumOn: number[] = [0, 0, 0, 0, 0]
     let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0]
@@ -70,7 +70,7 @@ namespace zumo {
     //% block="show error msg"
     //% subcategory=Light
     export function Showerr(): string {
-        return _err;
+        return _err1 + "<<>>>" +  _err ;
     }
 
     //% block="read Light Number"
@@ -223,7 +223,7 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;
-            _err = _maxValue.toString();
+            //_err = _maxValue.toString();
             // when _init = true, not set any signal to A0 - buzzer
             
             if (_pins[i] === pins.A0 && _init){
@@ -233,6 +233,7 @@ namespace zumo {
                 _pins[i].digitalWrite(true);
                 _pins[i].setPull(PinPullMode.PullNone);
             }
+            _err1 = sensor_values[i].toString() + ":" + _maxValue.toString();
         }
 
         control.waitMicros(10);   // charge lines for 10 us
