@@ -2,6 +2,7 @@
 const QTR_EMITTERS_OFF = 0
 const QTR_EMITTERS_ON = 1
 const QTR_EMITTERS_ON_AND_OFF = 2
+const QTR_MAX_SENSORS = 16
 enum Lightype {
     DIGITAL,
     ANALOG
@@ -295,7 +296,7 @@ namespace zumo {
         /*for (let i = 0; i < _numSensors; i++) {
             off_values.push(0);
         }*/
-        off_values = initializeArrayWithZeros(_numSensors);
+        off_values = initializeArrayWithZeros(QTR_MAX_SENSORS);
         let i: number;
 
         if (readMode == QTR_EMITTERS_ON || readMode === QTR_EMITTERS_ON_AND_OFF)
