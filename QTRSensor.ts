@@ -31,7 +31,7 @@ namespace zumo {
     //% type.defl = Lightype.DIGITAL
     //% subcategory=Light
     export function Initialization(type:Lightype = Lightype.DIGITAL): void {
-        let startTime: number = control.millis();
+
         _init = true;
         let i: number;
 
@@ -50,6 +50,7 @@ namespace zumo {
         calibratedMaximumOff = initializeArrayWithZeros(_numSensors)
         // delay 500 ms
         control.waitMicros(500000);
+        let startTime: number = control.millis();
         while (control.millis() - startTime < 10000) {
             calibrate(QTR_EMITTERS_ON);
         }
@@ -357,9 +358,7 @@ namespace zumo {
 
         // Allocate the arrays if necessary.
         for (i = 0; i < _numSensors; i++) {
-                calibratedMaximum[i] = 0;
-        }
-        for (i = 0; i < _numSensors; i++) {
+            calibratedMaximum[i] = 0;
             calibratedMinimum[i] = _maxValue;
         }
 
