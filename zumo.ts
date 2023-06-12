@@ -210,7 +210,7 @@ namespace zumo {
     //% blockGap=10
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     //% subcategory=Ultrasonic
-    export function Ultrasonic(
+   /*export function Ultrasonic(
         pulsePin: DigitalInOutPin,
         readPin: DigitalInOutPin
     ): number {
@@ -231,5 +231,5 @@ namespace zumo {
         let length = (list[1] + list[2] + list[3]) / 3;
         return Math.floor(length);
     }
-
+*/
 }

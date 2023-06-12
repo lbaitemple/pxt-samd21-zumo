@@ -17,8 +17,8 @@ namespace zumo {
     }
 
     //% block="Ultrasound at trig $trig and echo $echo "
-    //% trig.defl=pins.SCL
-    //% echo.defl=pins.SDA
+    //% trig.defl=pins.D7
+    //% echo.defl=pins.D6
     //% subcategory=Ultrasound
     export function HCSR04(trig:DigitalInOutPin, echo:DigitalInOutPin): number{
         echoPin = echo;
