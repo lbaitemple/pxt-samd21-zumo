@@ -1,6 +1,6 @@
 // Add your code here
 namespace zumo {
-    let color: number=1, last_color: number, last:number;
+    let color: number=1, last_color: number=0, last:number=0;
     //% block="QTR at $pin with Emit $epin "
     //% pin.defl=pins.D2
     //% epin.defl=pins.D4
