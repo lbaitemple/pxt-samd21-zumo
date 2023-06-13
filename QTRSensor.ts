@@ -99,10 +99,11 @@ namespace zumo {
     //% subcategory=Light
     export function readLine(): number [] {
         let sensor_values: number[] = [];
-        let onLine = 0;
+        let onLine = 0 ;
         let readMode: number = QTR_EMITTERS_ON;
 
         sensor_values = initializeArrayWithZeros(_numSensors)
+        
         readCalibrated(sensor_values, readMode);
         let avg: number = 0;
         let sum: number = 0;
@@ -148,7 +149,7 @@ namespace zumo {
         return zerosArray;
     }
 
-    function readCalibrated(sensor_values: number[], readMode: number, sensor: Lightype =Lightype.DIGITAL ): void {
+    function readCalibrated(sensor_values: number[], readMode: number = QTR_EMITTERS_ON, sensor: Lightype =Lightype.DIGITAL ): void {
         let i: number;
 
         // if not calibrated, do nothing
@@ -245,8 +246,8 @@ namespace zumo {
 
         let startTime = control.micros();
         while (control.micros() - startTime < _maxValue) {
-            _err1 = sensor_values[_numSensors - 1].toString() + ":" + _maxValue.toString();
-            let time = control.micros() - startTime;
+           // _err1 = sensor_values[_numSensors - 1].toString() + ":" + _maxValue.toString();
+            let time :number = control.micros() - startTime;
             for (i = 0; i < _numSensors; i++) {
                 
                 if (_pins[i].digitalRead() === false && time < sensor_values[i]){
