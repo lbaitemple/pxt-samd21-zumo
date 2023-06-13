@@ -221,7 +221,7 @@ namespace zumo {
         let i: number;
 
         for (i = 0; i < _numSensors; i++) {
-            //sensor_values[i] = _maxValue;
+            sensor_values[i] = _maxValue;
             //_err = _maxValue.toString();
             // when _init = true, not set any signal to A0 - buzzer
             
@@ -238,7 +238,7 @@ namespace zumo {
 
 
         for (i = 0; i < _numSensors; i++) {
-            sensor_values[i] = _maxValue;
+          //  sensor_values[i] = _maxValue;
             _pins[i].digitalWrite(false);
         //    _pins[i].setPull(PinPullMode.PullNone); // important: disable internal pull-up!
         }
