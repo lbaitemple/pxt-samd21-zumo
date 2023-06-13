@@ -73,7 +73,7 @@ namespace zumo {
     //% block="show error msg"
     //% subcategory=Light
     export function Showerr(): string {
-        return _err1 + "<<>>" +  _err ;
+        return _err ;
     }
 
     //% block="read Light Number"
