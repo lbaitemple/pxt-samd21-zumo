@@ -230,7 +230,7 @@ namespace zumo {
 //                _pins[i].setPull(PinPullMode.PullNone);
             }else{
                 _pins[i].digitalWrite(true);
-               _pins[i].setPull(PinPullMode.PullDown);
+            //   _pins[i].setPull(PinPullMode.PullDown);
             }
         }
 
@@ -239,7 +239,7 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
             _pins[i].digitalWrite(false);
-            _pins[i].setPull(PinPullMode.PullDown); // important: disable internal pull-up!
+        //    _pins[i].setPull(PinPullMode.PullDown); // important: disable internal pull-up!
             sensor_values[i] = _maxValue;
         }
 
