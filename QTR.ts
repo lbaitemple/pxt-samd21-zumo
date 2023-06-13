@@ -6,6 +6,7 @@ namespace zumo {
     //% epin.defl=pins.D4
     //% subcategory=QTR
     export function QTR(pin: DigitalInOutPin, epin: DigitalInOutPin): number {
+        epin.digitalWrite(true);
         pin.digitalWrite(true)
         control.waitMicros(12);
         pin.digitalWrite(false)
@@ -18,7 +19,7 @@ namespace zumo {
         } else if ((control.micros() - time) < last && color == -1) {
             color = 1;
         }
-
+        epin.digitalWrite(false);
         last = control.micros() - time;
         last_color = color;
         return color;
