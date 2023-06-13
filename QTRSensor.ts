@@ -220,10 +220,6 @@ namespace zumo {
     function readPrivate(sensor_values: number[]): void {
         let i: number;
 
-        if (!_pins){
-            return;
-        }
-
         for (i = 0; i < _numSensors; i++) {
             
             //_err = _maxValue.toString();
@@ -234,7 +230,7 @@ namespace zumo {
 //                _pins[i].setPull(PinPullMode.PullNone);
             }else{
                 _pins[i].digitalWrite(true);
-                _pins[i].setPull(PinPullMode.PullNone);
+               _pins[i].setPull(PinPullMode.PullDown);
             }
         }
 
@@ -242,9 +238,9 @@ namespace zumo {
 
 
         for (i = 0; i < _numSensors; i++) {
-            sensor_values[i] = _maxValue;
             _pins[i].digitalWrite(false);
-            _pins[i].setPull(PinPullMode.PullNone); // important: disable internal pull-up!
+            _pins[i].setPull(PinPullMode.PullDown); // important: disable internal pull-up!
+            sensor_values[i] = _maxValue;
         }
 
         let startTime = control.micros();
