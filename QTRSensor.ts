@@ -102,7 +102,7 @@ namespace zumo {
         let onLine = 0;
         let readMode: number = QTR_EMITTERS_ON;
 
-
+        sensor_values = initializeArrayWithZeros(_numSensors)
         readCalibrated(sensor_values, readMode);
         let avg: number = 0;
         let sum: number = 0;
