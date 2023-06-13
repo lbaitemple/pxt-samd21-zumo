@@ -330,8 +330,9 @@ namespace zumo {
 
     function calibrate(readMode: number): void {
         if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) {
-            _err = "read here " + readMode.toString();
+            _err = "read here " + calibratedMaximumOn[1].toString();
             calibrateOnOrOff(calibratedMinimumOn, calibratedMaximumOn, QTR_EMITTERS_ON);
+            _err = _err + "cal here " + calibratedMaximumOn[1].toString();
         }
 
         if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_OFF) {
