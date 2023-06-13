@@ -257,7 +257,7 @@ namespace zumo {
                    // _err += _pins[i].digitalRead().toString() + time.toString();
                 }
             }
-            _err = _err + time.toString() + " " + sensor_values[_numSensors-1].toString();
+            _err = _err1 + time.toString() + " " + sensor_values[_numSensors-1].toString();
         }
     }
 
