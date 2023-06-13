@@ -256,7 +256,7 @@ namespace zumo {
                 }
             }
             control.waitMicros(1);
-            _err = _err1 + time.toString() + " " + sensor_values[_numSensors-1].toString();
+            //_err = _err1 + time.toString() + " " + sensor_values[_numSensors-1].toString();
         }
     }
 
@@ -330,6 +330,7 @@ namespace zumo {
 
     function calibrate(readMode: number): void {
         if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) {
+            _err = "read here " + readMode.toString();
             calibrateOnOrOff(calibratedMinimumOn, calibratedMaximumOn, QTR_EMITTERS_ON);
         }
 
