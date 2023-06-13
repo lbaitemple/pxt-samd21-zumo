@@ -11,9 +11,9 @@ namespace zumo {
         control.waitMicros(12);
         pin.digitalWrite(false)
         let time:number = control.micros();
-
+        writeNum(color);
         while (pin.digitalRead() == true) { }
-
+        writeNum(time);
         if ((control.micros() - time) > last && color == 1) {
             color = -1;
         } else if ((control.micros() - time) < last && color == -1) {
