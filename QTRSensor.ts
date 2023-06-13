@@ -333,7 +333,7 @@ namespace zumo {
             if (_err.length ==0)
                 _err = calibratedMaximumOn[1].toString() + ", ";
             calibrateOnOrOff(calibratedMinimumOn, calibratedMaximumOn, QTR_EMITTERS_ON);
-            if (_err.length < 3)
+            if (_err.length < 10)
                 _err = _err + calibratedMaximumOn[1].toString() + "; ";
         }
 
