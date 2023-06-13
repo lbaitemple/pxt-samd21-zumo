@@ -1,6 +1,6 @@
 // Add your code here
 namespace zumo {
-    let color: number, last_color: number, last:number;
+    let color: number=1, last_color: number, last:number;
     //% block="QTR at $pin with Emit $epin "
     //% pin.defl=pins.D2
     //% epin.defl=pins.D4
@@ -10,7 +10,7 @@ namespace zumo {
         pin.digitalWrite(true)
         control.waitMicros(12);
         pin.digitalWrite(false)
-        let time = control.micros();
+        let time:number = control.micros();
 
         while (pin.digitalRead() == true) { }
 
