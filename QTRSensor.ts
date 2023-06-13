@@ -254,10 +254,10 @@ namespace zumo {
                 
                 if (_pins[i].digitalRead() === false && time < sensor_values[i]){
                     sensor_values[i] = time;
-                    _err += _pins[i].digitalRead().toString() + time.toString();
+                   // _err += _pins[i].digitalRead().toString() + time.toString();
                 }
             }
-            //_err = time.toString() + " " + sensor_values[_numSensors-1].toString();
+            _err = _err + time.toString() + " " + sensor_values[_numSensors-1].toString();
         }
     }
 
