@@ -73,7 +73,7 @@ namespace zumo {
     //% block="show error msg"
     //% subcategory=Light
     export function Showerr(): string {
-        return _err ;
+        return _err1 + ":" + _err ;
     }
 
     //% block="read Light Number"
@@ -330,10 +330,10 @@ namespace zumo {
 
     function calibrate(readMode: number): void {
         if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) {
-            if (_err.length ==0)
-                _err = calibratedMaximumOn[1].toString() + ", ";
+            if (_err1.length < 10)
+                _err1 = _err1 + calibratedMaximumOn[1].toString() + ", ";
             calibrateOnOrOff(calibratedMinimumOn, calibratedMaximumOn, QTR_EMITTERS_ON);
-            if (_err.length < 10)
+            if (_err.length < 20)
                 _err = _err + calibratedMaximumOn[1].toString() + "; ";
         }
 
