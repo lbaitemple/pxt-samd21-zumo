@@ -24,8 +24,12 @@ namespace zumo {
         control.runInParallel(() => {
             for (let i = 0; i < pinsToRead.length; i++) {
                 const pin = pinsToRead[i];
+                pin.digitalWrite(true)
+                control.waitMicros(10)
+                pin.digitalWrite(false)
                 const startTime = control.millis();
                 const value = pin.digitalRead();
+                while (value==true){}
                 const eventTime = control.millis() - startTime;
                 storePinValueAndTime(i, value, eventTime);
             }
