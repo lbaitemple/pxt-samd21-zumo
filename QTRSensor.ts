@@ -239,6 +239,7 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
           //  sensor_values[i] = _maxValue;
+            _pins[i].setPull(PinPullMode.PullNone);
             _pins[i].digitalWrite(false);
         //    _pins[i].setPull(PinPullMode.PullNone); // important: disable internal pull-up!
         }
