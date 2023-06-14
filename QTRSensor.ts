@@ -237,7 +237,7 @@ namespace zumo {
         let startTime = control.micros()
 
         for (i = 0; i < _numSensors; i++) {
-        //    _pins[i].setPull(PinPullMode.PullNone);
+            _pins[i].setPull(PinPullMode.PullNone);
         //    _pins[i].digitalWrite(false);
         }
         // make it nothing runInParallel
