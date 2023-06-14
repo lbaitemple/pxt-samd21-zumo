@@ -112,7 +112,7 @@ namespace zumo {
         for (i = 0; i < _numSensors; i++) {
             let value = sensor_values[i];
             if (whiteLine)
-                value = value -1000;
+                value = 1000- value;
 
             // keep track of whether we see the line at all
             if (value > 200) {
