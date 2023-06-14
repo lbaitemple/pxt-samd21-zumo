@@ -233,31 +233,44 @@ namespace zumo {
                 _pins[i].digitalWrite(true);
             //   _pins[i].setPull(PinPullMode.PullDown);
             }
-        }
-
+        }        
         control.waitMicros(10);   // charge lines for 10 us
-
+   
 
         for (i = 0; i < _numSensors; i++) {
           //  sensor_values[i] = _maxValue;
             _pins[i].digitalWrite(false);
         //    _pins[i].setPull(PinPullMode.PullNone); // important: disable internal pull-up!
         }
+        // make it nothing runInParallel
+        control.runInParallel(() => {
+            for (let i = 0; i < _pins.length; i++) {
+                const pin = _pins[i];
+                const startTime = control.millis();
+                const value = pin.digitalRead();
+                const eventTime = control.millis() - startTime;
+                if (value == false && eventTime < sensor_values[i])
+                    sensor_values[i] = eventTime
+            }
+        });
 
-        let startTime = control.micros();
-        while (control.micros() - startTime < _maxValue) {
+/*        while (control.micros() - startTime < _maxValue) {
            // _err1 = sensor_values[_numSensors - 1].toString() + ":" + _maxValue.toString();
-            let time :number = control.micros() - startTime;
+            time = control.micros() - startTime;
             for (i = 0; i < _numSensors; i++) {
                 
                 if (_pins[i].digitalRead() === false && time < sensor_values[i]){
                     sensor_values[i] = time;
-                   // _err += _pins[i].digitalRead().toString() + time.toString();
                 }
             }
             control.waitMicros(1);
             //_err = _err1 + time.toString() + " " + sensor_values[_numSensors-1].toString();
         }
+        */
+
+    
+
+        
     }
 
 
