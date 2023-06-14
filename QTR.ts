@@ -28,7 +28,7 @@ namespace zumo {
                 control.waitMicros(10)
                 pin.digitalWrite(false)
                 const startTime = control.millis();
-                const value = pin.digitalRead();
+                let value = pin.digitalRead();
                 while (value==true){}
                 const eventTime = control.millis() - startTime;
                 storePinValueAndTime(i, value, eventTime);
