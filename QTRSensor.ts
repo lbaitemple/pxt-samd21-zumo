@@ -11,7 +11,7 @@ enum Lightype {
 namespace zumo {
 
 //    let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A0, pins.A2, pins.D5];
-    let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A0, pins.A2, pins.D5];
+    let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11,  pins.A2, pins.D5];
     let _apins: AnalogInOutPin[] = [pins.A0, pins.A1];
     let _numSensors = _pins.length;
     let _numSamplesPerSensor = 4;
@@ -22,10 +22,10 @@ namespace zumo {
     let _lastValue = 0;
     let _err = "", _err1="";
     let _emitterPin = pins.D2;
-    let calibratedMinimumOn: number[] = [0, 0, 0, 0, 0, 0 ]
-    let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0, 0]
-    let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0, 0]
-    let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0, 0]
+    let calibratedMinimumOn: number[] = [0, 0, 0, 0, 0 ]
+    let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0]
+    let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0]
+    let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0]
     let whiteLine = 0;
     
     //% block="Initialization $type Light Sensors"
@@ -224,12 +224,14 @@ namespace zumo {
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;
             
-            if (_pins[i] == pins.A0 && _init){
+           /* if (_pins[i] == pins.A0 && _init){
+                _init = false;
             }else{
                 _pins[i].digitalWrite(true);
-            }
+            }*/
+            _pins[i].digitalWrite(true);
         }
-        _init = false;
+        
         control.waitMicros(10);   // charge lines for 10 us
         let time: number = 0;
         let startTime = control.micros()
