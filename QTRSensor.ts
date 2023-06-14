@@ -264,7 +264,8 @@ namespace zumo {
                 }
             }
         }
-
+        if (_err.length < 20)
+            _err = _err + sensor_values[1].toString() + "; ";
     
 
         
@@ -343,8 +344,7 @@ namespace zumo {
             if (_err1.length < 10)
                 _err1 = _err1 + calibratedMaximumOn[1].toString() + ", ";
             calibrateOnOrOff(calibratedMinimumOn, calibratedMaximumOn, QTR_EMITTERS_ON);
-            if (_err.length < 20)
-                _err = _err + calibratedMaximumOn[1].toString() + "; ";
+            
         }
 
         if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_OFF) {
