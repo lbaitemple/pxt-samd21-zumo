@@ -243,7 +243,7 @@ namespace zumo {
         //    _pins[i].setPull(PinPullMode.PullNone); // important: disable internal pull-up!
         }
         // make it nothing runInParallel
-        control.runInParallel(() => {
+        /*control.runInParallel(() => {
             for (let i = 0; i < _pins.length; i++) {
                 const pin = _pins[i];
                 const startTime = control.millis();
@@ -253,7 +253,7 @@ namespace zumo {
                     sensor_values[i] = eventTime
             }
         });
-
+        */
         let time:number =0;
         let startTime = control.micros()
         while (control.micros() - startTime < _maxValue) {
