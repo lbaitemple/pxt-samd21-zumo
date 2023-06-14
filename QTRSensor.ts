@@ -205,14 +205,11 @@ namespace zumo {
                 x = Math.idiv(((sensor_values[i] as number) - calmin) * 1000, denominator)
             }
             if (x < 0) {
-                //    _err ="here "
                 x = 0;
             } else if (x > 1000) {
                 x = 1000;
-                //    _err="big";
             }
             sensor_values[i] = x;
-            //_err = _err + "; nogood   " + `${x}`
         }
 
     }
@@ -250,10 +247,6 @@ namespace zumo {
                 }
             }
         }
-        if (_err.length < 30)
-            _err = _err + sensor_values[1].toString() + "; " + time.toString() + "- ";
-    
-
         
     }
 
@@ -327,8 +320,6 @@ namespace zumo {
 
     function calibrate(readMode: number): void {
         if (readMode === QTR_EMITTERS_ON_AND_OFF || readMode === QTR_EMITTERS_ON) {
-            if (_err1.length < 10)
-                _err1 = _err1 + calibratedMaximumOn[1].toString() + ", ";
             calibrateOnOrOff(calibratedMinimumOn, calibratedMaximumOn, QTR_EMITTERS_ON);
             
         }
