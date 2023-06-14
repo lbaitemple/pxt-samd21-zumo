@@ -230,25 +230,15 @@ namespace zumo {
             }
         }        
         control.waitMicros(10);   // charge lines for 10 us
-   
+        let time: number = 0;
+        let startTime = control.micros()
+
         for (i = 0; i < _numSensors; i++) {
             _pins[i].setPull(PinPullMode.PullDown);
         //    _pins[i].digitalWrite(false);
         }
         // make it nothing runInParallel
-        /*control.runInParallel(() => {
-            for (let i = 0; i < _pins.length; i++) {
-                const pin = _pins[i];
-                const startTime = control.millis();
-                const value = pin.digitalRead();
-                const eventTime = control.millis() - startTime;
-                if (value == false && eventTime < sensor_values[i])
-                    sensor_values[i] = eventTime
-            }
-        });
-        */
-        let time:number =0;
-        let startTime = control.micros()
+
         while ((time=control.micros() - startTime) < _maxValue) {
             //time = control.micros() - startTime;
             for (i = 0; i < _numSensors; i++) {
