@@ -223,25 +223,17 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;
-            //_err = _maxValue.toString();
-            // when _init = true, not set any signal to A0 - buzzer
             
             if (_pins[i] == pins.A0 && _init){
-//                _pins[i].digitalWrite(true);
-//                _pins[i].setPull(PinPullMode.PullNone);
             }else{
                 _pins[i].digitalWrite(true);
-            //   _pins[i].setPull(PinPullMode.PullDown);
             }
         }        
         control.waitMicros(10);   // charge lines for 10 us
    
-
         for (i = 0; i < _numSensors; i++) {
-          //  sensor_values[i] = _maxValue;
-            _pins[i].setPull(PinPullMode.PullNone);
-            _pins[i].digitalWrite(false);
-        //    _pins[i].setPull(PinPullMode.PullNone); // important: disable internal pull-up!
+            _pins[i].setPull(PinPullMode.PullDown);
+        //    _pins[i].digitalWrite(false);
         }
         // make it nothing runInParallel
         /*control.runInParallel(() => {
