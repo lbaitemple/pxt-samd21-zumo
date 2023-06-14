@@ -26,7 +26,7 @@ namespace zumo {
     let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0]
     let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0]
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0]
-    let whiteLine = 1;
+    let whiteLine = 0;
     
     //% block="Initialization $type Light Sensors"
     //% type.defl = Lightype.DIGITAL
@@ -237,7 +237,7 @@ namespace zumo {
         let startTime = control.micros()
 
         for (i = 0; i < _numSensors; i++) {
-            _pins[i].setPull(PinPullMode.PullNone);
+        //    _pins[i].setPull(PinPullMode.PullNone);
         //    _pins[i].digitalWrite(false);
         }
         // make it nothing runInParallel
