@@ -264,8 +264,8 @@ namespace zumo {
                 }
             }
         }
-        if (_err.length < 20)
-            _err = _err + sensor_values[1].toString() + "; ";
+        if (_err.length < 30)
+            _err = _err + sensor_values[1].toString() + "; " + time.toString() + "- ";
     
 
         
