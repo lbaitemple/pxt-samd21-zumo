@@ -26,7 +26,7 @@ namespace zumo {
     let calibratedMaximumOn: number[] = [0, 0, 0, 0, 0]
     let calibratedMinimumOff: number[] = [0, 0, 0, 0, 0]
     let calibratedMaximumOff: number[] = [0, 0, 0, 0, 0]
-    let whiteLine = 1;
+    let whiteLine = 0;
     
     //% block="Initialization $type Light Sensors"
     //% type.defl = Lightype.DIGITAL
@@ -201,8 +201,8 @@ namespace zumo {
 
             let x: number = 0;
             if (denominator != 0) {
-               // x = (((sensor_values[i] as number) - calmin) * 1000) / denominator;
-                x = Math.idiv(((sensor_values[i] as number) - calmin) * 1000, denominator)
+                x = (((sensor_values[i] as number) - calmin) * 1000) / denominator;
+                //x = Math.idiv(((sensor_values[i] as number) - calmin) * 1000, denominator)
             }
             if (x < 0) {
                 //    _err ="here "
@@ -223,12 +223,6 @@ namespace zumo {
 
         for (i = 0; i < _numSensors; i++) {
             sensor_values[i] = _maxValue;
-            
-           /* if (_pins[i] == pins.A0 && _init){
-                _init = false;
-            }else{
-                _pins[i].digitalWrite(true);
-            }*/
             _pins[i].digitalWrite(true);
         }
         
@@ -237,13 +231,11 @@ namespace zumo {
         let startTime = control.micros()
 
         for (i = 0; i < _numSensors; i++) {
-        //    _pins[i].setPull(PinPullMode.PullNone);
-        //    _pins[i].digitalWrite(false);
         }
         // make it nothing runInParallel
 
-        while ((time=control.micros() - startTime) < _maxValue) {
-            //time = control.micros() - startTime;
+        while (time < _maxValue) {
+            time = control.micros() - startTime;
             for (i = 0; i < _numSensors; i++) {
                 if (_pins[i].digitalRead() === false && time < sensor_values[i]){
                     sensor_values[i] = time;
@@ -288,9 +280,7 @@ namespace zumo {
 
     function read(sensor_values: number[], readMode: number): void {
         let off_values: number[] = [];
-        /*for (let i = 0; i < _numSensors; i++) {
-            off_values.push(0);
-        }*/
+
         off_values = initializeArrayWithZeros(QTR_MAX_SENSORS);
         let i: number;
 
