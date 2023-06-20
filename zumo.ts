@@ -84,7 +84,6 @@ namespace zumo {
     //% speed.min=-100
     //% speed.max=100
     //% weight=90
-    //% color = "#4C97FF" icon = "\uf085"
     //% subcategory=Motors
     export function runMotor(motor: ZumoMotor, speed: number): void {
 
