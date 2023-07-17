@@ -68,6 +68,7 @@ namespace zumo {
             //            pins.i2cWriteBuffer(chipAdress, data, false)
             _i2c.writeBuffer(chipAdress, data, false)
         }
+        
         charX = xOffset
         charY = yOffset
     }
