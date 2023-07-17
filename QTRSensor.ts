@@ -11,7 +11,7 @@ enum Lightype {
 namespace zumo {
 
 //    let _pins: DigitalInOutPin[] = [pins.D4, pins.A3, pins.D11, pins.A0, pins.A2, pins.D5];
-    let _pins: DigitalInOutPin[] = [pins.D4, pins.A3,  pins.A2, pins.D5];
+    let _pins: DigitalInOutPin[] = [pins.D5, pins.A2,  pins.A3, pins.D4];
     let _apins: AnalogInOutPin[] = [pins.A0, pins.A1];
     let _numSensors = _pins.length;
     let _numSamplesPerSensor = 4;
