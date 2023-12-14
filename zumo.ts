@@ -178,10 +178,10 @@ namespace zumo {
     export function rotateMotor(speed: number, dir: ZumoMotorRotation): void {
         if (dir === ZumoMotorRotation.Forward){
             runMotor(ZumoMotor.left, speed)
-            runMotor(ZumoMotor.right, -speed)
+            runMotor(ZumoMotor.right, speed)
         }else{
             runMotor(ZumoMotor.left, -speed)
-            runMotor(ZumoMotor.right, speed)
+            runMotor(ZumoMotor.right, -speed)
 
         }
         return
