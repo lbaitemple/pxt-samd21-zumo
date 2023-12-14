@@ -108,7 +108,7 @@ namespace zumo {
                 pins.D10.analogWrite(analogSpeed);
             }
         }
-        if (motor === ZumoMotor.right || motor === ZumoMotor.All) {
+        else if (motor === ZumoMotor.right || motor === ZumoMotor.All) {
             const isClockwise = speed * motorRotations[ZumoMotor.right] > 0;
             //        pins.D7.digitalWrite(isClockwise ? true : false);
             pins.D8.digitalWrite(isClockwise ? true : false);
@@ -141,7 +141,7 @@ namespace zumo {
             pins.D8.digitalWrite(false); // direction left
         }
 
-        if (motor === ZumoMotor.right || motor === ZumoMotor.All) {
+        else if (motor === ZumoMotor.right || motor === ZumoMotor.All) {
             //pins.digitalWritePin(pins.D15, 0);
             //pins.digitalWritePin(DigitalPin.P16, 0);
             //pins.digitalWritePin(DigitalPin.P14, 0);
@@ -167,7 +167,7 @@ namespace zumo {
             motorRotations[ZumoMotor.left] = rotation;
         }
 
-        if (motor === ZumoMotor.right || motor === ZumoMotor.All) {
+        else if (motor === ZumoMotor.right || motor === ZumoMotor.All) {
             motorRotations[ZumoMotor.right] = rotation;
         }
     }
