@@ -72,7 +72,7 @@ function mapValue(
 namespace zumo {
     const motorRotations = [
         ZumoMotorRotation.Forward,
-        ZumoMotorRotation.Forward,
+        ZumoMotorRotation.Backward,
     ];
 
     /**
