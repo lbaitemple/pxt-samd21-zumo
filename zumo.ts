@@ -151,29 +151,26 @@ namespace zumo {
         }
     }
 
-    //% blockId="turnleft" block="Turn Left at speed %speed \\%"
+    //% blockId="turn" block="Turn Direction %motor at speed %speed \\%"
     //% speed.min=-100
     //% speed.max=100
     //% weight=90
     //% subcategory=Motors
-    export function turnLeft(
-        speed: number){
-        setMotorRotation(ZumoMotor.right, ZumoMotorRotation.Forward)
-        setMotorRotation(ZumoMotor.left, ZumoMotorRotation.Backward)
-        rotateMotor(speed, ZumoMotorRotation.Forward)
+    export function TurnDirection(motor: ZumoMotor, speed: number){
+        if (motor === ZumoMotor.left){
+            setMotorRotation(ZumoMotor.right, ZumoMotorRotation.Forward)
+            setMotorRotation(ZumoMotor.left, ZumoMotorRotation.Backward)
+            rotateMotor(speed, ZumoMotorRotation.Forward)
+        }
+        else if (motor === ZumoMotor.right) {
+            setMotorRotation(ZumoMotor.left, ZumoMotorRotation.Forward)
+            setMotorRotation(ZumoMotor.right, ZumoMotorRotation.Backward)
+            rotateMotor(speed, ZumoMotorRotation.Forward)
+        }
+
     }
 
-    //% blockId="turnright" block="Turn right at speed %speed \\%"
-    //% speed.min=-100
-    //% speed.max=100
-    //% weight=90
-    //% subcategory=Motors
-    export function turnRight(
-        speed: number) {
-        setMotorRotation(ZumoMotor.left, ZumoMotorRotation.Forward)
-        setMotorRotation(ZumoMotor.right, ZumoMotorRotation.Backward)
-        rotateMotor(speed, ZumoMotorRotation.Forward)
-    }
+
 
 
     /**
