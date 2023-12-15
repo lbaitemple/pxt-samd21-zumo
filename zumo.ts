@@ -184,7 +184,7 @@ namespace zumo {
     //% subcategory=Motors
     //% blockId=zumo_motor_set_rotation block="set motor %motor rotation | to %rotation"
     //% weight=88
-    export function setMotorRotation(
+    function setMotorRotation(
         motor: ZumoMotor,
         rotation: ZumoMotorRotation
     ) {
@@ -200,7 +200,7 @@ namespace zumo {
     //% subcategory=Motors
     //% block="rotate motor $dir at $speed %"
     //% weight=88
-    export function rotateMotor(speed: number, dir: ZumoMotorRotation): void {
+    function rotateMotor(speed: number, dir: ZumoMotorRotation): void {
         if (dir === ZumoMotorRotation.Forward){
             runMotor(ZumoMotor.left, speed)
             runMotor(ZumoMotor.right, speed)
