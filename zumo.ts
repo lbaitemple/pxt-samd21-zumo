@@ -158,15 +158,12 @@ namespace zumo {
     //% subcategory=Motors
     export function TurnDirection(motor: ZumoMotor, speed: number){
         if (motor === ZumoMotor.left){
-            setMotorRotation(ZumoMotor.right, ZumoMotorRotation.Forward)
-            setMotorRotation(ZumoMotor.left, ZumoMotorRotation.Backward)
-            rotateMotor(speed, ZumoMotorRotation.Forward)
+            runMotor(ZumoMotor.left, speed)
+            runMotor(ZumoMotor.right, speed)
         }
         else if (motor === ZumoMotor.right) {
-            setMotorRotation(ZumoMotor.left, ZumoMotorRotation.Forward)
-            setMotorRotation(ZumoMotor.right, ZumoMotorRotation.Backward)
-            rotateMotor(speed, ZumoMotorRotation.Forward)
-        }
+            runMotor(ZumoMotor.left, -speed)
+            runMotor(ZumoMotor.right, -speed)        }
 
     }
 
