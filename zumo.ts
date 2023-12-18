@@ -147,7 +147,7 @@ namespace zumo {
     //% blockId="zumo_motor_stop" block="stop motor %motor"
     //% weight=89
     export function stopMotor(motor: ZumoMotor): void {
-        if (motor === ZumoMotor.left || motor === ZumoMotor.All) {
+        if (motor === ZumoMotor.left ) {
 
             //pins.digitalWritePin(DigitalPin.P11, 0);
             //pins.digitalWritePin(DigitalPin.P12, 0);
@@ -158,13 +158,20 @@ namespace zumo {
             pins.D8.digitalWrite(false); // direction left
         }
 
-        else if (motor === ZumoMotor.right || motor === ZumoMotor.All) {
+        else if (motor === ZumoMotor.right ) {
             //pins.digitalWritePin(pins.D15, 0);
             //pins.digitalWritePin(DigitalPin.P16, 0);
             //pins.digitalWritePin(DigitalPin.P14, 0);
             pins.D10.digitalWrite(false);   //left motor  PWM
             pins.D9.digitalWrite(false);   //right motor PWM
             pins.D7.digitalWrite(false);  //direction right
+        }
+        else if (motor == ZumoMotor.All){
+            pins.D10.digitalWrite(false);  //left motor  PWM
+            pins.D9.digitalWrite(false);  //right motor PWM
+            pins.D8.digitalWrite(false); // direction left
+            pins.D7.digitalWrite(false);  //direction right
+
         }
     }
 
