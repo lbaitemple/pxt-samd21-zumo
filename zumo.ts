@@ -98,6 +98,12 @@ namespace zumo {
         if (motor === ZumoMotor.left) {
             isClockwise = speed * motorRotations[ZumoMotor.left] > 0;
             pins.D7.digitalWrite(isClockwise ? true : false);
+            if (isClockwise){
+                ZumoLED.ON
+            }
+            else{
+                ZumoLED.OFF
+            }
             //   pins.D8.digitalWrite(isClockwise ? true : false);
 
             if (speed === 100) {
