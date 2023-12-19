@@ -98,13 +98,6 @@ namespace zumo {
         if (motor === ZumoMotor.left) {
             isClockwise = speed * motorRotations[ZumoMotor.left] > 0;
             pins.D7.digitalWrite(isClockwise ? true : false);
-            if (isClockwise){
-                ZumoLED.ON
-            }
-            else{
-                ZumoLED.OFF
-            }
-            //   pins.D8.digitalWrite(isClockwise ? true : false);
 
             if (speed === 100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
@@ -118,7 +111,7 @@ namespace zumo {
         else if (motor === ZumoMotor.right ) {
             isClockwise = speed * motorRotations[ZumoMotor.right] > 0;
             //        pins.D7.digitalWrite(isClockwise ? true : false);
-            pins.D8.digitalWrite(isClockwise ? true : false);
+            pins.D8.digitalWrite(isClockwise ? false : true);
             if (speed === 100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P14, 1);
@@ -131,7 +124,7 @@ namespace zumo {
         else if (motor == ZumoMotor.All){
             isClockwise = speed * motorRotations[ZumoMotor.All] > 0;
             pins.D7.digitalWrite(isClockwise ? true : false);
-            pins.D8.digitalWrite(isClockwise ? true : false);
+            pins.D8.digitalWrite(isClockwise ? false : true);
 
             if (speed === 100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
