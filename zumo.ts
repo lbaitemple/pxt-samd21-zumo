@@ -182,12 +182,13 @@ namespace zumo {
     //% subcategory=Motors
     export function TurnDirection(motor: ZumoMotor, speed: number){
         if (motor === ZumoMotor.left){
-            runMotor(ZumoMotor.left, speed)
+            runMotor(ZumoMotor.left, -speed)
             runMotor(ZumoMotor.right, speed)
         }
         else if (motor === ZumoMotor.right) {
-            runMotor(ZumoMotor.left, -speed)
-            runMotor(ZumoMotor.right, -speed)        }
+            runMotor(ZumoMotor.left, speed)
+            runMotor(ZumoMotor.right, -speed)       
+        }
 
     }
 
