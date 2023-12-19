@@ -47,9 +47,9 @@ const enum DistanceUnit {
 
 const enum ZumoMotorRotation {
     //% block="forward"
-    Forward = -1,
+    Forward = 1,
     //% block="backward"
-    Backward = 1,
+    Backward = -1,
 }
 
 const enum ZumoPushButtonState {
