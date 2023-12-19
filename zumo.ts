@@ -123,8 +123,8 @@ namespace zumo {
         }
         else if (motor == ZumoMotor.All){
             isClockwise = speed * motorRotations[ZumoMotor.All] > 0;
-            pins.D7.digitalWrite(isClockwise ? true : false);
-            pins.D8.digitalWrite(isClockwise ? true : false);
+            pins.D7.digitalWrite(speed>0 ? true : false);
+            pins.D8.digitalWrite(speed > 0 ? true : false);
 
             if (speed === 100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
