@@ -203,7 +203,7 @@ namespace zumo {
     //% subcategory=Motors
     //% blockId=zumo_motor_set_rotation block="set motor %motor rotation | to %rotation"
     //% weight=88
-    function setMotorRotation(
+    export function setMotorRotation(
         motor: ZumoMotor,
         rotation: ZumoMotorRotation
     ) {
