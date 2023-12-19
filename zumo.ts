@@ -86,6 +86,7 @@ namespace zumo {
     //% weight=90
     //% subcategory=Motors
     export function runMotor(motor: ZumoMotor, speed: number): void {
+        let isClockwise: boolean = true;
 
         if (speed === 0) {
             stopMotor(motor);
@@ -95,7 +96,7 @@ namespace zumo {
         const analogSpeed = mapValue(absSpeedPercentage, 0, 100, 0, 255);
 
         if (motor === ZumoMotor.left) {
-            const isClockwise = speed * motorRotations[ZumoMotor.left] > 0;
+            isClockwise = speed * motorRotations[ZumoMotor.left] > 0;
             pins.D7.digitalWrite(isClockwise ? true : false);
             //   pins.D8.digitalWrite(isClockwise ? true : false);
 
@@ -109,7 +110,7 @@ namespace zumo {
             }
         }
         else if (motor === ZumoMotor.right ) {
-            const isClockwise = speed * motorRotations[ZumoMotor.right] > 0;
+            isClockwise = speed * motorRotations[ZumoMotor.right] > 0;
             //        pins.D7.digitalWrite(isClockwise ? true : false);
             pins.D8.digitalWrite(isClockwise ? true : false);
             if (speed === 100) {
@@ -122,7 +123,7 @@ namespace zumo {
             }
         }
         else if (motor == ZumoMotor.All){
-            const isClockwise = speed * motorRotations[ZumoMotor.All] > 0;
+            isClockwise = speed * motorRotations[ZumoMotor.All] > 0;
             pins.D7.digitalWrite(isClockwise ? true : false);
             pins.D8.digitalWrite(isClockwise ? true : false);
 
