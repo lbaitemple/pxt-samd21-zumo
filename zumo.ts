@@ -95,8 +95,7 @@ namespace zumo {
         const absSpeedPercentage = Math.min(Math.abs(speed), 100);
         const analogSpeed = mapValue(absSpeedPercentage, 0, 100, 0, 255);
 
-        if (motor === ZumoMotor.left) {
-            isClockwise = speed * motorRotations[ZumoMotor.left] > 0;
+        if (motor === ZumoMotor.right) {
             pins.D7.digitalWrite(speed<0 ? true : false);
             pins.D8.digitalWrite(speed < 0 ? false : true);
 
@@ -111,15 +110,17 @@ namespace zumo {
                 pins.D9.analogWrite(analogSpeed);
             }
         }
-        else if (motor === ZumoMotor.right ) {
-            isClockwise = speed * motorRotations[ZumoMotor.right] > 0;
-            //        pins.D7.digitalWrite(isClockwise ? true : false);
-            pins.D8.digitalWrite(speed < 0  ? true : false);
+        else if (motor === ZumoMotor.left ) {
+            pins.D8.digitalWrite(speed < 0 ? true : false);
+            pins.D7.digitalWrite(speed < 0 ? false : true);
+
             if (speed === 100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
-                //pins.digitalWritePin(DigitalPin.P14, 1);
-                pins.D9.digitalWrite(true);
+                //pins.digitalWritePin(DigitalPin.P13, 1);
+                pins.D10.digitalWrite(true);
             } else {
+                pins.D10.analogSetPeriod(255);
+                pins.D10.analogWrite(analogSpeed);
                 pins.D9.analogSetPeriod(255);
                 pins.D9.analogWrite(analogSpeed);
             }
