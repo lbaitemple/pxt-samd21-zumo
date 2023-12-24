@@ -62,12 +62,14 @@ namespace zumo {
 
     //% block="show calibratedMinimumOn values"
     //% subcategory=Light
+    //% group="calibration"
     export function calibratedMinimumOn_values(): number [] {
         return calibratedMinimumOn;
     }
 
     //% block="show calibratedMaximumOn values"
     //% subcategory=Light
+    //% group="calibration"
     export function calibratedMaximumOn_values(): number[] {
         return calibratedMaximumOn;
     }
@@ -100,6 +102,7 @@ namespace zumo {
 
     //% block="read Line "
     //% subcategory=Light
+    //% group="GetLight"
     export function readLine(): number [] {
         let sensor_values: number[] = [];
         let onLine = 0 ;
