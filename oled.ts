@@ -46,6 +46,20 @@ namespace zumo {
         buf[1] = cmd
         _i2c.writeBuffer(chipAdress, buf, false)
     }
+
+    /**
+     * 
+     */
+    //% blockId=createI2C
+    //% block="create I2C at scl $scl and sda $sda "
+    //% scl.defl=pins.SCL
+    //% sda.defl=pins.SDA
+    //% subcategory=SSD1306
+    //% group="Initialization"
+    export function createI2C(scl: DigitalInOutPin, sda: DigitalInOutPin): void {
+        _i2c = pins.createI2C(sda, scl);
+    }
+
     //% block="clear OLED display"
     //% weight=3
     //% subcategory=SSD1306
@@ -74,18 +88,7 @@ namespace zumo {
         charY = yOffset
     }
 
-    /**
-     * 
-     */
-    //% blockId=createI2C
-    //% block="create I2C at scl $scl and sda $sda "
-    //% scl.defl=pins.SCL
-    //% sda.defl=pins.SDA
-    //% subcategory=SSD1306
-    //% group="Initialization"
-    export function createI2C(scl: DigitalInOutPin, sda: DigitalInOutPin): void {
-        _i2c = pins.createI2C(sda, scl);
-    }
+
 
     function drawLoadingFrame() {
         command(SSD1306_SETCOLUMNADRESS)
@@ -296,6 +299,7 @@ namespace zumo {
     //% block="insert newline"
     //% weight=4
     //% subcategory=SSD1306
+    //% group="Functions"
     export function newLine() {
         charY++
         charX = xOffset
