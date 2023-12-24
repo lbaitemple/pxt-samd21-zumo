@@ -49,6 +49,7 @@ namespace zumo {
     //% block="clear OLED display"
     //% weight=3
     //% subcategory=SSD1306
+    //% group="Functions"
     export function clear() {
         loadStarted = false
         loadPercent = 0
@@ -149,6 +150,7 @@ namespace zumo {
     //% percent.min=0 percent.max=100
     //% weight=2
     //% subcategory=SSD1306
+    //% group="Functions"
     export function drawLoading(percent: number) {
         if (loadStarted) {
             drawLoadingBar(percent)
@@ -163,6 +165,7 @@ namespace zumo {
     //% block="show (without newline) number $n"
     //% weight=5
     //% subcategory=SSD1306
+    //% group="Functions"
     export function writeNum(n: number) {
         let numString = n.toString()
         writeString(numString)
@@ -170,6 +173,7 @@ namespace zumo {
     //% block="show string $str"
     //% weight=8
     //% subcategory=SSD1306
+    //% group="Functions"
     export function writeStringNewLine(str: string) {
         writeString(str)
         newLine()
@@ -177,6 +181,7 @@ namespace zumo {
     //% block="show number $n"
     //% weight=7
     //% subcategory=SSD1306
+    //% group="Functions"
     export function writeNumNewLine(n: number) {
         writeNum(n)
         newLine()
@@ -237,6 +242,7 @@ namespace zumo {
     //% y1.defl=20
     //% weight=1
     //% subcategory=SSD1306
+    //% group="Functions"
     export function drawLine(x0: number, y0: number, x1: number, y1: number) {
         let pixels: Array<Array<number>> = []
         let kx: number, ky: number, c: number, o: number, xx: number, yy: number, dx: number, dy: number;
@@ -279,6 +285,7 @@ namespace zumo {
     //% y1.defl=20
     //% weight=0
     //% subcategory=SSD1306
+    //% group="Functions"
     export function drawRectangle(x0: number, y0: number, x1: number, y1: number) {
         drawLine(x0, y0, x1, y0)
         drawLine(x0, y1, x1, y1)
@@ -297,6 +304,7 @@ namespace zumo {
     //% block="show (without newline) string $str"
     //% weight=6
     //% subcategory=SSD1306
+    //% group="Functions"
     export function writeString(str: string) {
         for (let p = 0; p < str.length; p++) {
             if (charX > displayWidth - 6) {
