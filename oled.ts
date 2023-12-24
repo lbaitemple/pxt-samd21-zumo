@@ -81,6 +81,7 @@ namespace zumo {
     //% scl.defl=pins.SCL
     //% sda.defl=pins.SDA
     //% subcategory=SSD1306
+    //% group="Initialization"
     export function createI2C(scl: DigitalInOutPin, sda: DigitalInOutPin): void {
         _i2c = pins.createI2C(sda, scl);
     }
@@ -334,6 +335,7 @@ namespace zumo {
     //% height.defl=64
     //% weight=9
     //% subcategory=SSD1306
+    //% group="Initialization"
     export function init(width: number, height: number) {
         command(SSD1306_DISPLAYOFF);
         command(SSD1306_SETDISPLAYCLOCKDIV);
