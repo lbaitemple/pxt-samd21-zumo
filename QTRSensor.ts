@@ -77,14 +77,14 @@ namespace zumo {
 
     //% block="read Light Number"
     //% subcategory=Light
-    //% group="GetLight"
+    //% group="Functions"
     export function getLineNumber(): number {
         return _line;
     }
 
     //% block="read sensor_values $value as a string"
     //% subcategory=Light
-    //% group="GetLight"
+    //% group="Functions"
     export function readString(value: number[]): string {
         let result: string = "";
         for (let i = 0; i < value.length; i++) {
@@ -98,7 +98,7 @@ namespace zumo {
 
     //% block="read Line "
     //% subcategory=Light
-    //% group="GetLight"
+    //% group="Functions"
     export function readLine(): number [] {
         let sensor_values: number[] = [];
         let onLine = 0 ;
