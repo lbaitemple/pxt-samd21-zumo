@@ -74,11 +74,6 @@ namespace zumo {
         return calibratedMaximumOn;
     }
 
-    //% block="show error msg"
-    //% subcategory=Light
-    export function Showerr(): string {
-        return _err1 + ":" + _err ;
-    }
 
     //% block="read Light Number"
     //% subcategory=Light
@@ -89,6 +84,7 @@ namespace zumo {
 
     //% block="read sensor_values $value as a string"
     //% subcategory=Light
+    //% group="GetLight"
     export function readString(value: number[]): string {
         let result: string = "";
         for (let i = 0; i < value.length; i++) {
