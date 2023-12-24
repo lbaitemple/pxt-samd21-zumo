@@ -32,6 +32,7 @@ namespace zumo {
     //% block="Initialization $type Light Sensors"
     //% type.defl = Lightype.DIGITAL
     //% subcategory=Light
+    //% group="Initialization"
     export function Initialization(type:Lightype = Lightype.DIGITAL): void {
 
         _init = true;
@@ -79,6 +80,7 @@ namespace zumo {
 
     //% block="read Light Number"
     //% subcategory=Light
+    //% group="GetLight"
     export function getLineNumber(): number {
         return _line;
     }
