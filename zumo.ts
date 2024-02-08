@@ -181,19 +181,6 @@ namespace zumo {
         }
     }
 
-    //% blockId="turn" block="Push Hard for period %period \\%"
-    //% period.min=0
-    //% period.max=1500000
-   //% period.default=50000
-    //% weight=90
-    //% subcategory=Motors
-    export function pushHard(period: number) {
-        pins.D10.digitalWrite(true);
-        pins.D9.digitalWrite(true);
-        control.waitMicros(period);
-        pins.D10.digitalWrite(false);
-        pins.D9.digitalWrite(false);
-    }
 
 
     //% blockId="turn" block="Turn Direction %motor at speed %speed \\%"
