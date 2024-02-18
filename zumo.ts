@@ -179,8 +179,9 @@ namespace zumo {
             //pins.digitalWritePin(DigitalPin.P16, 0);
             //pins.digitalWritePin(DigitalPin.P14, 0);
             //  pins.D10.digitalWrite(false);   //left motor  PWM
-            pins.D9.digitalWrite(false);   //right motor PWM
             pins.D9.analogWrite(0);
+            pins.D9.digitalWrite(false);   //right motor PWM
+
             pins.D7.digitalWrite(false);  //direction right
         }
         else if (motor == ZumoMotor.All) {
