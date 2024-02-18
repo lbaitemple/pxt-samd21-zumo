@@ -106,8 +106,10 @@ namespace zumo {
                 }
 
             } else {
-                pins.D9.analogSetPeriod(255);
-                pins.D9.analogWrite(analogSpeed);
+                if (pins.D9.analogRead() < 10) {
+                    pins.D9.analogSetPeriod(255);
+                    pins.D9.analogWrite(analogSpeed);
+                }
             }
         }
         else if (motor === ZumoMotor.left) {
@@ -120,8 +122,10 @@ namespace zumo {
                     pins.D10.digitalWrite(true);
                 }
             } else {
-                pins.D10.analogSetPeriod(255);
-                pins.D10.analogWrite(analogSpeed);
+                if (pins.D10.analogRead()<10){
+                    pins.D10.analogSetPeriod(255);
+                    pins.D10.analogWrite(analogSpeed);
+                }
             }
         }
         else if (motor == ZumoMotor.All) {
@@ -139,10 +143,14 @@ namespace zumo {
                     pins.D9.digitalWrite(true);
                 }
             } else {
-                pins.D10.analogSetPeriod(255);
-                pins.D10.analogWrite(analogSpeed);
-                pins.D9.analogSetPeriod(255);
-                pins.D9.analogWrite(analogSpeed);
+                if (pins.D10.analogRead() < 10) {
+                    pins.D10.analogSetPeriod(255);
+                    pins.D10.analogWrite(analogSpeed);
+                }
+                if (pins.D9.analogRead() < 10) {
+                    pins.D9.analogSetPeriod(255);
+                    pins.D9.analogWrite(analogSpeed);
+                }
             }
         }
     }
