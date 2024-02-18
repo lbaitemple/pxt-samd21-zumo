@@ -38,6 +38,18 @@ const enum ZumoNotes {
     OFF = 0,
 }
 
+const enum ZumoMotors {
+    //% block="ON"
+    LEFT_ON = 1,
+    //% block="OFF"
+    LEFT_OFF = 0,
+
+    //% block="ON"
+    RIGHT_ON = 1,
+    //% block="OFF"
+    RIGHT_OFF = 0,
+}
+
 const enum DistanceUnit {
     //% block="cm"
     CM = 58, // Duration of echo round-trip in Microseconds (uS) for two centimeters, 343 m/s at sea level and 20°C
@@ -75,6 +87,8 @@ namespace zumo {
         ZumoMotorRotation.Backward,
     ];
 
+    let leftMotorstate = ZumoMotors.LEFT_OFF;
+    let rightMotorstate = ZumoMotors.RIGHT_OFF;
     /**
     * Orient in the direction of the value specified and move forward..
     * @param is the preferred_heading angle to orient to.
@@ -87,6 +101,7 @@ namespace zumo {
     //% subcategory=Motors
     export function runMotor(motor: ZumoMotor, speed: number): void {
         let isClockwise: boolean = true;
+    
 
         if (speed === 0) {
             stopMotor(motor);
@@ -101,14 +116,16 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
-                if (pins.D9.digitalRead() == false ){
+                if (leftMotorstate == ZumoMotors.LEFT_OFF ){
                     pins.D9.digitalWrite(true);
+                    leftMotorstate = ZumoMotors.LEFT_ON;
                 }
 
             } else {
-                if (pins.D9.digitalRead() == false && pins.D9.analogRead() < 10) {
+                if (leftMotorstate == ZumoMotors.LEFT_OFF) {
                     pins.D9.analogSetPeriod(255);
                     pins.D9.analogWrite(analogSpeed);
+                    leftMotorstate = ZumoMotors.LEFT_ON;
                 }
             }
         }
@@ -118,13 +135,15 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P14, 1);
-                if (pins.D10.digitalRead() == false && pins.D10.analogRead() < 10) {
+                if (rightMotorstate == ZumoMotors.RIGHT_OFF) {
                     pins.D10.digitalWrite(true);
+                    rightMotorstate = ZumoMotors.RIGHT_ON;
                 }
             } else {
-                if (pins.D10.digitalRead() == false && pins.D10.analogRead()<10){
+                if (rightMotorstate == ZumoMotors.RIGHT_OFF){
                     pins.D10.analogSetPeriod(255);
                     pins.D10.analogWrite(analogSpeed);
+                    rightMotorstate = ZumoMotors.RIGHT_ON;
                 }
             }
         }
@@ -136,20 +155,24 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
-                if (pins.D10.digitalRead() == false && pins.D10.digitalRead() == false) {
+                if (rightMotorstate == ZumoMotors.RIGHT_OFF) {
                     pins.D10.digitalWrite(true);
+                    rightMotorstate = ZumoMotors.RIGHT_ON;
                 }
-                if (pins.D9.digitalRead() == false && pins.D9.digitalRead() == false) {
+                if (leftMotorstate == ZumoMotors.LEFT_OFF) {
                     pins.D9.digitalWrite(true);
+                    leftMotorstate = ZumoMotors.LEFT_ON;
                 }
             } else {
-                if (pins.D10.digitalRead() == false && pins.D10.analogRead() < 10) {
+                if (rightMotorstate == ZumoMotors.RIGHT_OFF) {
                     pins.D10.analogSetPeriod(255);
                     pins.D10.analogWrite(analogSpeed);
+                    rightMotorstate = ZumoMotors.RIGHT_ON;
                 }
-                if (pins.D9.digitalRead() == false && pins.D9.analogRead() < 10) {
+                if (leftMotorstate == ZumoMotors.LEFT_OFF) {
                     pins.D9.analogSetPeriod(255);
                     pins.D9.analogWrite(analogSpeed);
+                    leftMotorstate = ZumoMotors.LEFT_ON;
                 }
             }
         }
@@ -171,6 +194,7 @@ namespace zumo {
             pins.D10.digitalWrite(false);  //left motor  PWM
             // pins.D9.digitalWrite(false);  //right motor PWM
             pins.D8.digitalWrite(false); // direction left
+            leftMotorstate = ZumoMotors.LEFT_OFF;
 
         }
 
@@ -183,6 +207,7 @@ namespace zumo {
             pins.D9.digitalWrite(false);   //right motor PWM
 
             pins.D7.digitalWrite(false);  //direction right
+            rightMotorstate = ZumoMotors.RIGHT_OFF;
         }
         else if (motor == ZumoMotor.All) {
             pins.D10.digitalWrite(false);  //left motor  PWM
@@ -191,7 +216,8 @@ namespace zumo {
             pins.D10.analogWrite(0);
             pins.D8.digitalWrite(false); // direction left
             pins.D7.digitalWrite(false);  //direction right
-
+            leftMotorstate = ZumoMotors.LEFT_OFF;
+            rightMotorstate = ZumoMotors.RIGHT_OFF;
         }
     }
 
