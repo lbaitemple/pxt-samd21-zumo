@@ -101,7 +101,7 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
-                if (pins.D9.digitalRead() == false && pins.D9.analogRead() < 10){
+                if (pins.D9.digitalRead() == false ){
                     pins.D9.digitalWrite(true);
                 }
 
