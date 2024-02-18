@@ -101,12 +101,12 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
-                if (pins.D9.digitalRead()==false){
+                if (pins.D9.digitalRead() == false && pins.D9.analogRead() < 10){
                     pins.D9.digitalWrite(true);
                 }
 
             } else {
-                if (pins.D9.analogRead() < 10) {
+                if (pins.D9.digitalRead() == false && pins.D9.analogRead() < 10) {
                     pins.D9.analogSetPeriod(255);
                     pins.D9.analogWrite(analogSpeed);
                 }
@@ -118,11 +118,11 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P14, 1);
-                if (pins.D10.digitalRead() == false) {
+                if (pins.D10.digitalRead() == false && pins.D10.analogRead() < 10) {
                     pins.D10.digitalWrite(true);
                 }
             } else {
-                if (pins.D10.analogRead()<10){
+                if (pins.D10.digitalRead() == false && pins.D10.analogRead()<10){
                     pins.D10.analogSetPeriod(255);
                     pins.D10.analogWrite(analogSpeed);
                 }
@@ -136,18 +136,18 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
-                if (pins.D10.digitalRead() == false) {
+                if (pins.D10.digitalRead() == false && pins.D10.digitalRead() == false) {
                     pins.D10.digitalWrite(true);
                 }
-                if (pins.D9.digitalRead() == false) {
+                if (pins.D9.digitalRead() == false && pins.D9.digitalRead() == false) {
                     pins.D9.digitalWrite(true);
                 }
             } else {
-                if (pins.D10.analogRead() < 10) {
+                if (pins.D10.digitalRead() == false && pins.D10.analogRead() < 10) {
                     pins.D10.analogSetPeriod(255);
                     pins.D10.analogWrite(analogSpeed);
                 }
-                if (pins.D9.analogRead() < 10) {
+                if (pins.D9.digitalRead() == false && pins.D9.analogRead() < 10) {
                     pins.D9.analogSetPeriod(255);
                     pins.D9.analogWrite(analogSpeed);
                 }
