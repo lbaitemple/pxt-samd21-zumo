@@ -101,10 +101,7 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
-                if (pins.D9.digitalRead() == false) {
-                    pins.D9.digitalWrite(true);
-                }
-                //pins.D9.digitalWrite(true);
+                pins.D9.digitalWrite(true);
 
             } else {
                 pins.D9.analogSetPeriod(255);
@@ -117,10 +114,7 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P14, 1);
-                //pins.D10.digitalWrite(true);
-                if (pins.D10.digitalRead() == false) {
-                    pins.D10.digitalWrite(true);
-                }
+                pins.D10.digitalWrite(true);
             } else {
                 pins.D10.analogSetPeriod(255);
                 pins.D10.analogWrite(analogSpeed);
@@ -134,14 +128,8 @@ namespace zumo {
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
-               //pins.D10.digitalWrite(true);
-               //pins.D9.digitalWrite(true);
-                if (pins.D9.digitalRead() == false) {
-                    pins.D9.digitalWrite(true);
-                }
-                if (pins.D10.digitalRead() == false) {
-                    pins.D10.digitalWrite(true);
-                }
+               pins.D10.digitalWrite(true);
+               pins.D9.digitalWrite(true);
             } else {
                 pins.D10.analogSetPeriod(255);
                 pins.D10.analogWrite(analogSpeed);
