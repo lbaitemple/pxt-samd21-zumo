@@ -167,7 +167,7 @@ namespace zumo {
             //pins.digitalWritePin(DigitalPin.P11, 0);
             //pins.digitalWritePin(DigitalPin.P12, 0);
             //pins.digitalWritePin(DigitalPin.P13, 0);
-
+            pins.D10.analogWrite(0);
             pins.D10.digitalWrite(false);  //left motor  PWM
             // pins.D9.digitalWrite(false);  //right motor PWM
             pins.D8.digitalWrite(false); // direction left
@@ -180,11 +180,14 @@ namespace zumo {
             //pins.digitalWritePin(DigitalPin.P14, 0);
             //  pins.D10.digitalWrite(false);   //left motor  PWM
             pins.D9.digitalWrite(false);   //right motor PWM
+            pins.D9.analogWrite(0);
             pins.D7.digitalWrite(false);  //direction right
         }
         else if (motor == ZumoMotor.All) {
             pins.D10.digitalWrite(false);  //left motor  PWM
             pins.D9.digitalWrite(false);  //right motor PWM
+            pins.D9.analogWrite(0);
+            pins.D10.analogWrite(0);
             pins.D8.digitalWrite(false); // direction left
             pins.D7.digitalWrite(false);  //direction right
 
