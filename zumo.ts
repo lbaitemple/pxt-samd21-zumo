@@ -1,5 +1,5 @@
 /**
-* Custom blocks - 2/18/2024
+* Custom blocks
 */
 //% color="#4C97FF" icon="\uf494"
 //% groups="['Motor', 'IMU', 'LED']"
@@ -96,8 +96,8 @@ namespace zumo {
         const analogSpeed = mapValue(absSpeedPercentage, 0, 100, 0, 255);
 
         if (motor === ZumoMotor.right) {
-            pins.D7.digitalWrite(speed<0 ? true : false);
-    
+            pins.D7.digitalWrite(speed < 0 ? true : false);
+
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
@@ -108,9 +108,9 @@ namespace zumo {
                 pins.D9.analogWrite(analogSpeed);
             }
         }
-        else if (motor === ZumoMotor.left ) {
+        else if (motor === ZumoMotor.left) {
             pins.D8.digitalWrite(speed < 0 ? true : false);
-            
+
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P14, 1);
@@ -120,16 +120,16 @@ namespace zumo {
                 pins.D10.analogWrite(analogSpeed);
             }
         }
-        else if (motor == ZumoMotor.All){
+        else if (motor == ZumoMotor.All) {
             isClockwise = speed * motorRotations[ZumoMotor.All] > 0;
-            pins.D7.digitalWrite(speed<0 ? true : false);
-            pins.D8.digitalWrite(speed< 0 ? true : false);
+            pins.D7.digitalWrite(speed < 0 ? true : false);
+            pins.D8.digitalWrite(speed < 0 ? true : false);
 
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P13, 1);
-               pins.D10.digitalWrite(true);
-               pins.D9.digitalWrite(true);
+                pins.D10.digitalWrite(true);
+                pins.D9.digitalWrite(true);
             } else {
                 pins.D10.analogSetPeriod(255);
                 pins.D10.analogWrite(analogSpeed);
@@ -146,27 +146,27 @@ namespace zumo {
     //% blockId="zumo_motor_stop" block="stop motor %motor"
     //% weight=89
     export function stopMotor(motor: ZumoMotor): void {
-        if (motor === ZumoMotor.left ) {
+        if (motor === ZumoMotor.left) {
 
             //pins.digitalWritePin(DigitalPin.P11, 0);
             //pins.digitalWritePin(DigitalPin.P12, 0);
             //pins.digitalWritePin(DigitalPin.P13, 0);
 
             pins.D10.digitalWrite(false);  //left motor  PWM
-           // pins.D9.digitalWrite(false);  //right motor PWM
+            // pins.D9.digitalWrite(false);  //right motor PWM
             pins.D8.digitalWrite(false); // direction left
-            
+
         }
 
-        else if (motor === ZumoMotor.right ) {
+        else if (motor === ZumoMotor.right) {
             //pins.digitalWritePin(pins.D15, 0);
             //pins.digitalWritePin(DigitalPin.P16, 0);
             //pins.digitalWritePin(DigitalPin.P14, 0);
-          //  pins.D10.digitalWrite(false);   //left motor  PWM
+            //  pins.D10.digitalWrite(false);   //left motor  PWM
             pins.D9.digitalWrite(false);   //right motor PWM
             pins.D7.digitalWrite(false);  //direction right
         }
-        else if (motor == ZumoMotor.All){
+        else if (motor == ZumoMotor.All) {
             pins.D10.digitalWrite(false);  //left motor  PWM
             pins.D9.digitalWrite(false);  //right motor PWM
             pins.D8.digitalWrite(false); // direction left
@@ -182,14 +182,14 @@ namespace zumo {
     //% speed.max=100
     //% weight=90
     //% subcategory=Motors
-    export function TurnDirection(motor: ZumoMotor, speed: number){
-        if (motor === ZumoMotor.left){
+    export function TurnDirection(motor: ZumoMotor, speed: number) {
+        if (motor === ZumoMotor.left) {
             runMotor(ZumoMotor.left, -speed)
             runMotor(ZumoMotor.right, speed)
         }
         else if (motor === ZumoMotor.right) {
             runMotor(ZumoMotor.left, speed)
-            runMotor(ZumoMotor.right, -speed)       
+            runMotor(ZumoMotor.right, -speed)
         }
 
     }
@@ -222,10 +222,10 @@ namespace zumo {
     //% block="rotate motor $dir at $speed %"
     //% weight=88
     function rotateMotor(speed: number, dir: ZumoMotorRotation): void {
-        if (dir === ZumoMotorRotation.Forward){
+        if (dir === ZumoMotorRotation.Forward) {
             runMotor(ZumoMotor.left, speed)
             runMotor(ZumoMotor.right, speed)
-        }else{
+        } else {
             runMotor(ZumoMotor.left, -speed)
             runMotor(ZumoMotor.right, -speed)
 
@@ -255,26 +255,26 @@ namespace zumo {
     //% blockGap=10
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     //% subcategory=Ultrasonic
-   /*export function Ultrasonic(
-        pulsePin: DigitalInOutPin,
-        readPin: DigitalInOutPin
-    ): number {
-
-        let list: Array<number> = [0, 0, 0, 0, 0];
-        for (let i = 0; i < 5; i++) {
-
-            pulsePin.setPull(PinPullMode.PullNone);
-            pulsePin.digitalWrite(false);
-            control.waitMicros(2);
-            pulsePin.digitalWrite(true);
-            control.waitMicros(15);
-            pulsePin.digitalWrite(false);
-            let d = readPin.pulseIn(PulseValue.High, 43200);
-            list[i] = Math.floor(d / 40);
-        }
-        list.sort();
-        let length = (list[1] + list[2] + list[3]) / 3;
-        return Math.floor(length);
-    }
-*/
+    /*export function Ultrasonic(
+         pulsePin: DigitalInOutPin,
+         readPin: DigitalInOutPin
+     ): number {
+ 
+         let list: Array<number> = [0, 0, 0, 0, 0];
+         for (let i = 0; i < 5; i++) {
+ 
+             pulsePin.setPull(PinPullMode.PullNone);
+             pulsePin.digitalWrite(false);
+             control.waitMicros(2);
+             pulsePin.digitalWrite(true);
+             control.waitMicros(15);
+             pulsePin.digitalWrite(false);
+             let d = readPin.pulseIn(PulseValue.High, 43200);
+             list[i] = Math.floor(d / 40);
+         }
+         list.sort();
+         let length = (list[1] + list[2] + list[3]) / 3;
+         return Math.floor(length);
+     }
+ */
 }
