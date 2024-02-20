@@ -23,6 +23,7 @@ namespace zumo {
     export function HCSR04(trig:DigitalInOutPin, echo:DigitalInOutPin): number{
         echoPin = echo;
         trigPin = trig;
+        control.waitMicros(50000);
         return calculateDistance();
     }
 }

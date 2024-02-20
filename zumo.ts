@@ -227,7 +227,7 @@ namespace zumo {
             leftMotorstate = ZumoMotors.LEFT_OFF;
             rightMotorstate = ZumoMotors.RIGHT_OFF;
         }
-        control.waitMicros(500000); // wait until the state is updated.
+        control.waitMicros(50000); // wait until the state is updated.
         
     }
 
