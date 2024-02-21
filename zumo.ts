@@ -138,9 +138,9 @@ namespace zumo {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
                 //pins.digitalWritePin(DigitalPin.P14, 1);
                 if (leftMotorstate == ZumoMotors.LEFT_OFF) {
-                    //pins.D10.digitalWrite(true);
-                    pins.D10.analogSetPeriod(255);
-                    pins.D10.analogWrite(255);
+                    pins.D10.digitalWrite(true);
+                    //pins.D10.analogSetPeriod(255);
+                    //pins.D10.analogWrite(255);
                     leftMotorstate = ZumoMotors.LEFT_ON;
                 }
             } else {
@@ -158,17 +158,17 @@ namespace zumo {
 
             if (speed === 100 || speed === -100) {
                 // Avoid PWM whenever possible as only 3 concurrent PWM outputs are available on the microbit
-                //pins.digitalWritePin(DigitalPin.P13, 1);
+
                 if (leftMotorstate == ZumoMotors.LEFT_OFF) {
-                   // pins.D10.digitalWrite(true);
-                    pins.D10.analogSetPeriod(255);
-                    pins.D10.analogWrite(255);
+                   pins.D10.digitalWrite(true);
+                   // pins.D10.analogSetPeriod(255);
+                   // pins.D10.analogWrite(255);
                     leftMotorstate = ZumoMotors.LEFT_ON;
                 }
                 if (rightMotorstate == ZumoMotors.RIGHT_OFF) {
-                    //pins.D9.digitalWrite(true);
-                    pins.D9.analogSetPeriod(255);
-                    pins.D9.analogWrite(255);
+                    pins.D9.digitalWrite(true);
+                    //pins.D9.analogSetPeriod(255);
+                    //pins.D9.analogWrite(255);
                     rightMotorstate = ZumoMotors.RIGHT_ON;
                 }
             } else {
