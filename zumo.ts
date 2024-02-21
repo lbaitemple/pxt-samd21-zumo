@@ -95,8 +95,8 @@ namespace zumo {
     * This function returns an array of 2 numbers which are speeds for left and right motor
     */
     //% blockId="zumo_motor_run" block="run motor %motor | at speed %speed \\%"
-    //% speed.min=-99
-    //% speed.max=99
+    //% speed.min=-100
+    //% speed.max=100
     //% weight=90
     //% subcategory=Motors
     export function runMotor(motor: ZumoMotor, speed: number): void {
