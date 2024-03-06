@@ -263,7 +263,7 @@ namespace zumo {
 
     function readAcc(): void {
 
-        control.waitMicros(500000);
+        //control.waitMicros(500000);
         switch (type) {
             case ZumoIMUType.LSM303DLHC:
                 // set MSB of register address for auto-increment
