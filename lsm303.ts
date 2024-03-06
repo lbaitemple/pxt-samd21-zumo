@@ -445,7 +445,7 @@ namespace zumo {
     //% dir.defl = ZumoIMUDirection.X
     //% subcategory=IMU
     export function readIMU(mode: ZumoIMUMode, dir:ZumoIMUDirection): number {
-        control.waitMicros(50000);
+        //control.waitMicros(50000);
         lsmread();
         switch (mode){
             case ZumoIMUMode.ACC:
