@@ -351,6 +351,31 @@ namespace zumo {
         readMag();
     }
 
+    function lsmreadacc(): void {
+        while (!accDataReady()) {
+            control.waitMicros(40);
+        }
+        readAcc();
+    }
+
+    function lsmreadgyro(): void {
+
+        if (lastError) { return; }
+        while (!gyroDataReady()) {
+            control.waitMicros(40);
+        }
+        readGyro();
+
+    }
+
+    function lsmreadmag(): void {
+        if (lastError) { return; }
+        while (!magDataReady()) {
+            control.waitMicros(40);
+        }
+        readMag();
+    }
+
     function readMag(): void {
         let mm = [0, 0, 0];
         if (type == ZumoIMUType.LSM303DLHC) {
@@ -446,13 +471,16 @@ namespace zumo {
     //% subcategory=IMU
     export function readIMU(mode: ZumoIMUMode, dir:ZumoIMUDirection): number {
         //control.waitMicros(50000);
-        lsmread();
+        //lsmread();
         switch (mode){
             case ZumoIMUMode.ACC:
+                lsmreadacc();
                 return a[dir];
             case ZumoIMUMode.MAG:
+                lsmreadmag();
                 return m[dir];
             case ZumoIMUMode.GYRO:
+                lsmreadgyro();
                 return g[dir];
         }
         
