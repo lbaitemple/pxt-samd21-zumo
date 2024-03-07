@@ -352,8 +352,9 @@ namespace zumo {
     }
 
     function lsmreadacc(): void {
+        if (lastError) { return; }
         while (!accDataReady()) {
-            control.waitMicros(40);
+            control.waitMicros(4000);
         }
         readAcc();
     }
@@ -362,7 +363,7 @@ namespace zumo {
 
         if (lastError) { return; }
         while (!gyroDataReady()) {
-            control.waitMicros(40);
+            control.waitMicros(4000);
         }
         readGyro();
 
@@ -371,7 +372,7 @@ namespace zumo {
     function lsmreadmag(): void {
         if (lastError) { return; }
         while (!magDataReady()) {
-            control.waitMicros(40);
+            control.waitMicros(4000);
         }
         readMag();
     }
