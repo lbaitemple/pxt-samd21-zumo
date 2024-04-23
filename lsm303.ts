@@ -223,7 +223,7 @@ namespace zumo {
 
     //% blockId=resetAngle
     //% block="Reset Motor Angle"
-    //% subcategory=Motor
+    //% subcategory=Motors
     export function setup(): void{
 
         let index = 0;
