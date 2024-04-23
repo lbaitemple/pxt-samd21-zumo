@@ -230,7 +230,7 @@ namespace zumo {
         
         enableDefault();
         configureForCompassHeading();
-        TurnDirection(ZumoMotor.All, 50);
+        TurnDirection(ZumoMotor.left, 50);
         for (index = 0; index < CALIBRATION_SAMPLES; index++) {
             // Take a reading of the magnetic vector and store it in compass.m
             readMag();
