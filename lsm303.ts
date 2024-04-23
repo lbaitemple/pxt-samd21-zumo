@@ -99,6 +99,9 @@ namespace zumo {
     const _lsm303mag_gauss_lsb_xy = 1100.0
     const _lsm303mag_gauss_lsb_z = 980.0
 
+    const DEVIATION_THRESHOLD=0.5
+    const CALIBRATION_SAMPLES = 70;
+
     let _i2c: I2C;
     let lastError = 0;
     let minread = MINREAD;
@@ -108,6 +111,8 @@ namespace zumo {
     let a: number[] = [0, 0, 0];
     let g: number[] = [0, 0, 0];
     let m: number[] = [0, 0, 0];
+    let running_min: number[] = [32767, 32767, 32767];
+    let running_max: number[] = [-32767, -32767, -32767];
     let msga='', msgg ='', msgm='';
 
 
@@ -214,6 +219,35 @@ namespace zumo {
         }
         return 0;
     }
+
+
+    //% blockId=resetAngle
+    //% block="Reset Motor Angle"
+    //% subcategory=Motor
+    export function setup(): void{
+
+        let index = 0;
+        
+        enableDefault();
+        configureForCompassHeading();
+        TurnDirection(ZumoMotor.left, 50);
+        for (index = 0; index < CALIBRATION_SAMPLES; index++) {
+            // Take a reading of the magnetic vector and store it in compass.m
+            readMag();
+            
+            running_min[0] = Math.min(running_min[0], m[0]);
+            running_min[1] = Math.min(running_min[1], m[1]);
+
+            running_max[0] = Math.max(running_max[0], m[0]);
+            running_max[1] = Math.max(running_max[1], m[1]);
+
+            control.waitMicros(500000);
+        }
+
+        stopMotor(ZumoMotor.All);
+        
+    }
+
 
     function testReg(addr: number, reg: number): number {
         let result = TEST_REG_ERROR;
