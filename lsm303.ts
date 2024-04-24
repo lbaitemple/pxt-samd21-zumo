@@ -300,7 +300,7 @@ namespace zumo {
     export function target_heading(motor: ZumoMotor, angle: number): void {
 
         let target_heading = averageHeading() + angle;
-        let stop = 0, SPEED = 200, DEVIATION_THRESHOLD = 0.5;
+        let stop = 0, SPEED = 200, TURN_BASE_SPEED = 50;
 
 
         while (!stop) {
@@ -308,6 +308,12 @@ namespace zumo {
             let avgHeading = heading + angle;
             let relative_heading = relativeHeading(heading, target_heading);
             let speed: number = SPEED*relative_heading / 180;
+            if (speed < 0)
+                speed -= TURN_BASE_SPEED;
+            else
+                speed += TURN_BASE_SPEED;
+
+
             clear();
             writeString("speed:");
             writeNumNewLine(speed);
