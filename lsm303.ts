@@ -326,7 +326,7 @@ namespace zumo {
             }
             else{
                 TurnDirection(ZumoMotor.left, speed);
-                control.waitMicros(50);
+    //            control.waitMicros(50);
             }
 
         }
