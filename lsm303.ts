@@ -247,6 +247,9 @@ namespace zumo {
         }
 
         stopMotor(ZumoMotor.All);
+        writeNum(running_max.x);
+        writeNum(running_min.x);
+        writeString("Done calibration");
     }
 
 
