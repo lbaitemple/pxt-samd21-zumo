@@ -308,8 +308,10 @@ namespace zumo {
             let avgHeading = heading + angle;
             let relative_heading = relativeHeading(heading, target_heading);
             let speed: number = relative_heading / 180;
+            clear();
             writeString("speed:");
-            writeNum(speed);
+            writeNumNewLine(speed);
+
 
             if (Math.abs(relative_heading) < DEVIATION_THRESHOLD){
                 //stop the motor
@@ -319,7 +321,7 @@ namespace zumo {
                 TurnDirection(ZumoMotor.left, speed);
             }
 
-            TurnDirection(ZumoMotor.left, speed);
+            TurnDirection(ZumoMotor.left, speed*100);
             let result = avgHeading % 360;
             if (result < 0) {
                 result += 360;
