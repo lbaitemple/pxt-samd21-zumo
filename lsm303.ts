@@ -307,7 +307,7 @@ namespace zumo {
             let heading = averageHeading();
             let avgHeading = heading + angle;
             let relative_heading = relativeHeading(heading, target_heading);
-            let speed: number = SPEED*100*relative_heading / 180;
+            let speed: number = SPEED*relative_heading / 180;
             clear();
             writeString("speed:");
             writeNumNewLine(speed);
@@ -320,7 +320,7 @@ namespace zumo {
             }
             else{
                 TurnDirection(ZumoMotor.left, speed);
-                control.waitMicros(50000);
+                control.waitMicros(50);
             }
 
         }
