@@ -111,9 +111,11 @@ namespace zumo {
     let a: number[] = [0, 0, 0];
     let g: number[] = [0, 0, 0];
     let m: number[] = [0, 0, 0];
-    let running_min: number[] = [32767, 32767, 32767];
-    let running_max: number[] = [-32767, -32767, -32767];
+    //let running_min: number[] = [32767, 32767, 32767];
+    //let running_max: number[] = [-32767, -32767, -32767];
     let msga='', msgg ='', msgm='';
+    let running_min = { x: 32767, y: 32767, z: 32767}; // Initialize running_min
+    let running_max = { x: -32767, y: -32767, z: -32767 }; // Initialize running_max
 
 
     function init(): number {
@@ -230,24 +232,100 @@ namespace zumo {
         
         enableDefault();
         configureForCompassHeading();
-        TurnDirection(ZumoMotor.left, 50);
+        TurnDirection(ZumoMotor.left, 80);
         for (index = 0; index < CALIBRATION_SAMPLES; index++) {
             // Take a reading of the magnetic vector and store it in compass.m
             readMag();
             
-            running_min[0] = Math.min(running_min[0], m[0]);
-            running_min[1] = Math.min(running_min[1], m[1]);
+            running_min.x = Math.min(running_min.x, m[0]);
+            running_min.y = Math.min(running_min.y, m[1]);
 
-            running_max[0] = Math.max(running_max[0], m[0]);
-            running_max[1] = Math.max(running_max[1], m[1]);
+            running_max.x = Math.max(running_max.x, m[0]);
+            running_max.y = Math.max(running_max.y, m[1]);
 
-            control.waitMicros(500000);
+            control.waitMicros(50000);
         }
 
         stopMotor(ZumoMotor.All);
-        writeStringNewLine("done calibration");
-        writeNum(running_max[0])
-        writeNum(running_max[1])
+    }
+
+
+    function heading(v: number[]): number {
+        let x_scaled: number = 2.0 * (v[0] - running_min.x) / (running_max.x - running_min.x) - 1.0;
+        let y_scaled: number = 2.0 * (v[1] - running_min.y) / (running_max.y - running_min.y) - 1.0;
+
+        let angle: number = Math.atan2(y_scaled, x_scaled) * 180 / Math.PI;
+        if (angle < 0)
+            angle += 360;
+        return angle;
+
+    }
+
+    function averageHeading(): number {
+        let avg = { x: 0, y: 0, z: 0 };
+
+        for (let i = 0; i < 10; i++) {
+            readMag();
+            avg.x += m[0];
+            avg.y += m[1];
+        }
+
+        avg.x /= 10.0;
+        avg.y /= 10.0;
+        avg.z = 0;
+
+        // avg is the average measure of the magnetic vector.
+        return heading([avg.x, avg.y]);
+    }
+
+    function relativeHeading(heading_from: number, heading_to: number): number {
+        let relative_heading: number = heading_to - heading_from;
+
+        // constrain to -180 to 180 degree range
+        if (relative_heading > 180)
+            relative_heading -= 360;
+        if (relative_heading < -180)
+            relative_heading += 360;
+
+        return relative_heading;
+    }
+
+    //% blockId=target_heading
+    //% block="target_heading $motor at angle $angle "
+    //% angle.defl=90
+    //% subcategory=Motors
+    export function target_heading(motor: ZumoMotor, angle: number): void {
+
+        let target_heading = averageHeading() + angle;
+        let stop = 0, SPEED = 200, DEVIATION_THRESHOLD = 0.5;
+
+
+        while (!stop) {
+            let heading = averageHeading();
+            let avgHeading = heading + angle;
+            let relative_heading = relativeHeading(heading, target_heading);
+            let speed: number = relative_heading / 180;
+            writeString("speed:");
+            writeNum(speed);
+
+            if (Math.abs(relative_heading) < DEVIATION_THRESHOLD){
+                //stop the motor
+                stopMotor(ZumoMotor.All);
+            }
+            else{
+                TurnDirection(ZumoMotor.left, speed);
+            }
+
+            TurnDirection(ZumoMotor.left, speed);
+            let result = avgHeading % 360;
+            if (result < 0) {
+                result += 360;
+            }
+            if (Math.abs(relative_heading) < DEVIATION_THRESHOLD) {
+                stopMotor(motor);
+                stop = 1;
+            }
+        }
     }
 
 
