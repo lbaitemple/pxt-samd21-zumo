@@ -58,7 +58,7 @@ const enum IrButtonAction {
 
 // *************************************************** [CATEGORY] IR VS1838 ****************************************** //
 //% weight=95 color=#bb0033 icon="\uf09e" block="IR VS1838"
-//% category="IR VS1838"
+//% category="ZUMO"
 namespace ZUMO {
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * declarations * * * * * * * * * ** * * * * * * * * * * * //
