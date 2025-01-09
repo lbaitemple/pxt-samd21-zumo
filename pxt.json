@@ -12,7 +12,8 @@
         "zumo.ts",
         "ns.ts",
         "QTRSensor.ts",
-        "HCSR04.ts"
+        "HCSR04.ts",
+        "ir-vs1838.ts"
     ],
     "testFiles": [],
     "public": true,
