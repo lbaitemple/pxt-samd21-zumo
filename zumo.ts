@@ -101,7 +101,7 @@ namespace zumo {
     // MOTOR_MIN_DUTY..1023 so even speed 1 actually moves instead of just humming.
     // Tune to your motors/battery: lower it if low speeds whine, raise it if the
     // bot still stalls at low speed.
-    const MOTOR_MIN_DUTY = 456;
+    const MOTOR_MIN_DUTY = 256;
     const MOTOR_MAX_DUTY = 1023;
 
     let leftMotorstate = ZumoMotors.LEFT_OFF;
