@@ -96,6 +96,14 @@ namespace zumo {
     // torque. (The original 255 was ~3.9 kHz and audible.)
     const MOTOR_PWM_PERIOD_US = 50;
 
+    // PWM duty is 0-1023 in MakeCode/pxt (NOT 0-255 like Arduino). MOTOR_MIN_DUTY
+    // is the lowest duty (0-1023) that reliably turns the wheels; speeds map onto
+    // MOTOR_MIN_DUTY..1023 so even speed 1 actually moves instead of just humming.
+    // Tune to your motors/battery: lower it if low speeds whine, raise it if the
+    // bot still stalls at low speed.
+    const MOTOR_MIN_DUTY = 456;
+    const MOTOR_MAX_DUTY = 1023;
+
     let leftMotorstate = ZumoMotors.LEFT_OFF;
     let rightMotorstate = ZumoMotors.RIGHT_OFF;
 
@@ -118,7 +126,6 @@ namespace zumo {
     //% blockId="zumo_motor_run" block="run motor %motor | at speed %speed \\%"
     //% speed.min=-100
     //% speed.max=100
-    //% speed.defl=20
     //% weight=90
     //% subcategory=Motors
     export function runMotor(motor: ZumoMotor, speed: number): void {
@@ -127,7 +134,8 @@ namespace zumo {
             return;
         }
         const absSpeedPercentage = Math.min(Math.abs(speed), 100);
-        const analogSpeed = mapValue(absSpeedPercentage, 0, 100, 0, 255);
+        // Map 0-100% onto MOTOR_MIN_DUTY..1023 (pxt analogWrite is 0-1023).
+        const analogSpeed = mapValue(absSpeedPercentage, 0, 100, MOTOR_MIN_DUTY, MOTOR_MAX_DUTY);
 
         if (motor == ZumoMotor.right) {
             pins.D7.digitalWrite(motorDirHigh(ZumoMotor.right, speed));
@@ -209,7 +217,6 @@ namespace zumo {
     //% blockId="turn" block="Turn Direction %motor at speed %speed \\%"
     //% speed.min=-100
     //% speed.max=100
-    //% speed.defl=20
     //% weight=90
     //% subcategory=Motors
     export function TurnDirection(motor: ZumoMotor, speed: number) {
