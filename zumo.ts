@@ -209,6 +209,7 @@ namespace zumo {
     //% blockId="turn" block="Turn Direction %motor at speed %speed \\%"
     //% speed.min=-100
     //% speed.max=100
+    //% speed.defl=20
     //% weight=90
     //% subcategory=Motors
     export function TurnDirection(motor: ZumoMotor, speed: number) {
