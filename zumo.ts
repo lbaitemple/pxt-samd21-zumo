@@ -117,6 +117,7 @@ namespace zumo {
      */
     //% blockId="zumo_motor_run" block="run motor %motor | at speed %speed \\%"
     //% speed.min=-100
+    //% speed.defl = 20
     //% speed.max=100
     //% weight=90
     //% subcategory=Motors
