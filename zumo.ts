@@ -214,6 +214,28 @@ namespace zumo {
         control.waitMicros(5000); // wait until the state is updated.
     }
 
+    //% blockId="zumo_turn_left" block="turn left at speed %speed \\%"
+    //% speed.min=0
+    //% speed.max=100
+    //% weight=87
+    //% subcategory=Motors
+    export function turnLeft(speed: number): void {
+        const s = Math.abs(speed);   // direction is fixed by the block; speed is magnitude
+        runMotor(ZumoMotor.left, -s);
+        runMotor(ZumoMotor.right, s);
+    }
+
+    //% blockId="zumo_turn_right" block="turn right at speed %speed \\%"
+    //% speed.min=0
+    //% speed.max=100
+    //% weight=86
+    //% subcategory=Motors
+    export function turnRight(speed: number): void {
+        const s = Math.abs(speed);
+        runMotor(ZumoMotor.left, s);
+        runMotor(ZumoMotor.right, -s);
+    }
+    
     //% blockId="turn" block="Turn Direction %motor at speed %speed \\%"
     //% speed.min=-100
     //% speed.max=100
