@@ -31,8 +31,8 @@ namespace zumo {
 
         // Spin one direction for the first 5 s
         while (control.millis() - start < 5000) {
-            runMotor(ZumoMotor.left, 200);
-            runMotor(ZumoMotor.right, -200);
+            runMotor(ZumoMotor.left, 20);
+            runMotor(ZumoMotor.right, -20);
             let sensors = readLine();
             let left = sensors[LEFT_INDEX];
             let right = sensors[RIGHT_INDEX];
@@ -47,8 +47,8 @@ namespace zumo {
 
         // Spin the other direction for the next 5 s
         while (control.millis() - start < 10000) {
-            runMotor(ZumoMotor.left, -200);
-            runMotor(ZumoMotor.right, 200);
+            runMotor(ZumoMotor.left, -20);
+            runMotor(ZumoMotor.right, 20);
             let sensors = readLine();
             let left = sensors[LEFT_INDEX];
             let right = sensors[RIGHT_INDEX];
