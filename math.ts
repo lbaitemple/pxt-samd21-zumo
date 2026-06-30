@@ -6,7 +6,7 @@ function toRadians(deg: number): number {
 
 
 //% blockId=cosfunc
-//% block="cos of %deg"
+//% block="cos %deg"
 //% deg.defl=0
  //% subcategory=Math
  //% group="trig"
@@ -15,7 +15,7 @@ export function toCosine(deg: number):number{
 }
 
 //% blockId=sinfunc
-//% block="sin of %deg"
+//% block="sin %deg"
 //% deg.defl=0
  //% subcategory=Math
 //% group="trig"
