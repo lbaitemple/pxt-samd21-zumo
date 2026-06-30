@@ -10,7 +10,7 @@ function toRadians(deg: number): number {
 //% deg.defl=0
  //% subcategory=Math
  //% group="trig"
-function toCosine(deg: number):number{
+export function toCosine(deg: number):number{
     return Math.cos(toRadians(deg))  // cos(45°)
 }
 
@@ -19,7 +19,7 @@ function toCosine(deg: number):number{
 //% deg.defl=0
  //% subcategory=Math
 //% group="trig"
-function toSine(deg: number): number {
+export function toSine(deg: number): number {
     return Math.sin(toRadians(deg))  // cos(45°)
 }
 }
