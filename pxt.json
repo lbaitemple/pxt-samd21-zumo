@@ -14,7 +14,8 @@
         "QTRSensor.ts",
         "HCSR04.ts",
         "ir-vs1838.ts",
-        "clibrate.ts"
+        "clibrate.ts",
+        "math.ts"
     ],
     "testFiles": [],
     "public": true,
